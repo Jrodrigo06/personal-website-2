@@ -20,49 +20,51 @@ export default function Nav() {
 
   return (
     <nav
-      className="sticky top-0 z-50 flex items-center justify-between"
+      className="sticky top-0 z-50"
       style={{
-        padding: "15px 28px",
+        padding: "15px 0",
         background: "var(--bg)",
         borderBottom: scrolled
           ? "0.5px solid var(--border-sub)"
           : "0.5px solid transparent",
       }}
     >
-      <a
-        href="#"
-        style={{
-          fontSize: "13px",
-          fontWeight: 500,
-          color: "var(--text-accent)",
-          fontFamily: "var(--font-serif)",
-        }}
-      >
-        jr
-      </a>
-
-      <div className="flex items-center" style={{ gap: "18px" }}>
-        {links.map((link) => (
-          <a
-            key={link.href}
-            href={link.href}
-            style={{ fontSize: "11px", color: "var(--text-dim)" }}
-          >
-            {link.label}
-          </a>
-        ))}
+      <div className="page-container flex items-center justify-between">
         <a
-          href="/photos"
+          href="#"
           style={{
-            fontSize: "11px",
+            fontSize: "13px",
+            fontWeight: 500,
             color: "var(--text-accent)",
-            border: "0.5px solid var(--border)",
-            padding: "4px 12px",
-            borderRadius: "20px",
+            fontFamily: "var(--font-serif)",
           }}
         >
-          photos ↗
+          jr
         </a>
+
+        <div className="flex items-center" style={{ gap: "18px" }}>
+          {links.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              style={{ fontSize: "11px", color: "var(--text-dim)" }}
+            >
+              {link.label}
+            </a>
+          ))}
+          <a
+            href="/photos"
+            style={{
+              fontSize: "11px",
+              color: "var(--text-accent)",
+              border: "0.5px solid var(--border)",
+              padding: "4px 12px",
+              borderRadius: "20px",
+            }}
+          >
+            photos ↗
+          </a>
+        </div>
       </div>
     </nav>
   );

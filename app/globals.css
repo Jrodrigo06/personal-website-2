@@ -1,54 +1,91 @@
 @import "tailwindcss";
 
+/* moss — default theme */
 :root {
-  --bg: #070d05;
-  --bg-surface: #0a1208;
-  --bg-card: #162010;
-  --bg-hover: #1e2e18;
-
-  --border: #1a2a14;
-  --border-sub: #0d1a09;
-  --border-em: #2a4020;
-
-  --text-h1: #cce8b0;
-  --text-h2: #a8cc90;
-  --text-accent: #6a9a52;
-  --text-body: #3e5832;
-  --text-dim: #2a3a22;
-  --text-ghost: #1e2e18;
-
-  /* badges (experience current/incoming, projects shipped) */
-  --badge-bg: #0a1408;
-  --badge-text: #5a8a42;
-  --badge-border: #1a2a14;
-  /* projects "in progress" status — amber chosen to sit within the palette */
-  --badge-amber: #b08a2a;
-
-  /* project tags */
-  --tag-text: #3e5430;
-  --tag-bg: #090e07;
-  --tag-border: #162012;
-
-  /* hero status dot */
-  --status-dot: #4a8a38;
-
-  /* music */
-  --vinyl-bg: #111a0e;
-  --vinyl-ring: #243818;
-  --wave: #4a7038;
-  --progress-fill: #5a8a42;
+    --bg: #080e06;
+    --bg-surface: #0d1509;
+    --bg-card: #16200f;
+    --bg-hover: #1e2c14;
+    --border-sub: #111a0d;
+    --border: #1c2a14;
+    --border-em: #2e4420;
+    --text-h1: #d4e8b8;
+    --text-h2: #a8c888;
+    --text-accent: #7ab85a;
+    --text-body: #587048;
+    --text-dim: #384828;
+    --text-ghost: #243018;
+    --badge-bg: #16200f;
+    --badge-text: #7ab85a;
+    --badge-border: #1c2a14;
+    --badge-amber: #b08a2a;
+    --tag-bg: #0a0f07;
+    --tag-border: #182010;
+    --tag-text: #4a6038;
+    --status-dot: #7ab85a;
+    --vinyl-bg: #0d1509;
+    --vinyl-ring: #1c2a14;
+    --wave: #4a7038;
+    --progress-fill: #7ab85a;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+/* sand — warm variant */
+:root.theme-sand {
+    --bg: #090805;
+    --bg-surface: #0e1209;
+    --bg-card: #181a10;
+    --bg-hover: #222018;
+    --border-sub: #141608;
+    --border: #20240e;
+    --border-em: #303818;
+    --text-h1: #d8d4b0;
+    --text-h2: #b0aa80;
+    --text-accent: #a09858;
+    --text-body: #706a48;
+    --text-dim: #484230;
+    --text-ghost: #302c1c;
+    --badge-bg: #181a10;
+    --badge-text: #a09858;
+    --badge-border: #20240e;
+    --badge-amber: #b08a2a;
+    --tag-bg: #0c0b07;
+    --tag-border: #1e1c0e;
+    --tag-text: #585238;
+    --status-dot: #a09858;
+    --vinyl-bg: #0e1209;
+    --vinyl-ring: #20240e;
+    --wave: #706a48;
+    --progress-fill: #a09858;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+html {
+    scroll-behavior: smooth;
+}
 body {
-  background: var(--bg);
-  color: var(--text-body);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
+    background: var(--bg);
+    color: var(--text-body);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+}
+
+.page-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 48px;
+    width: 100%;
 }
 
 @keyframes wave {
-  0%, 100% { transform: scaleY(0.4); }
-  50% { transform: scaleY(1); }
+    0%,
+    100% {
+        transform: scaleY(0.4);
+    }
+    50% {
+        transform: scaleY(1);
+    }
 }
