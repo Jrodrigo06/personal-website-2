@@ -1,26 +1,54 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #070d05;
+  --bg-surface: #0a1208;
+  --bg-card: #162010;
+  --bg-hover: #1e2e18;
+
+  --border: #1a2a14;
+  --border-sub: #0d1a09;
+  --border-em: #2a4020;
+
+  --text-h1: #cce8b0;
+  --text-h2: #a8cc90;
+  --text-accent: #6a9a52;
+  --text-body: #3e5832;
+  --text-dim: #2a3a22;
+  --text-ghost: #1e2e18;
+
+  /* badges (experience current/incoming, projects shipped) */
+  --badge-bg: #0a1408;
+  --badge-text: #5a8a42;
+  --badge-border: #1a2a14;
+  /* projects "in progress" status — amber chosen to sit within the palette */
+  --badge-amber: #b08a2a;
+
+  /* project tags */
+  --tag-text: #3e5430;
+  --tag-bg: #090e07;
+  --tag-border: #162012;
+
+  /* hero status dot */
+  --status-dot: #4a8a38;
+
+  /* music */
+  --vinyl-bg: #111a0e;
+  --vinyl-ring: #243818;
+  --wave: #4a7038;
+  --progress-fill: #5a8a42;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text-body);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+@keyframes wave {
+  0%, 100% { transform: scaleY(0.4); }
+  50% { transform: scaleY(1); }
 }
