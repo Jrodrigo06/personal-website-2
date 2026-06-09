@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Hero() {
   return (
     <header
@@ -7,26 +9,6 @@ export default function Hero() {
         borderBottom: "0.5px solid var(--border-sub)",
       }}
     >
-      {/* diagonal line texture */}
-      <svg
-        className="pointer-events-none absolute inset-0 h-full w-full"
-        style={{ zIndex: 0 }}
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        {[0, 1, 2, 3, 4, 5].map((i) => (
-          <line
-            key={i}
-            x1={`${i * 20 - 20}%`}
-            y1="0"
-            x2={`${i * 20 + 20}%`}
-            y2="100%"
-            stroke="var(--border-sub)"
-            strokeWidth="1"
-          />
-        ))}
-      </svg>
-
       {/* top section */}
       <div
         className="relative grid"
@@ -89,27 +71,26 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* photo placeholder */}
+        {/* photo */}
         <div
-          className="relative flex items-end"
+          className="relative"
           style={{
             width: "108px",
             height: "136px",
             background: "var(--bg-surface)",
             border: "0.5px solid var(--border)",
             borderRadius: "6px",
-            padding: "6px",
+            overflow: "hidden",
           }}
         >
-          <span
-            style={{
-              fontSize: "9px",
-              fontFamily: "monospace",
-              color: "var(--text-ghost)",
-            }}
-          >
-            photo
-          </span>
+          <Image
+            src="/hero.jpg"
+            alt="Jerome Rodrigo"
+            fill
+            sizes="108px"
+            style={{ objectFit: "cover" }}
+            priority
+          />
         </div>
       </div>
 
