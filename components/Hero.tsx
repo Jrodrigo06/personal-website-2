@@ -63,11 +63,8 @@ export default function Hero() {
               maxWidth: "360px",
             }}
           >
-            I care about understanding things deeply, not just making them work.
-            That&apos;s what pulled me into data science and math, and what keeps
-            me building. Problem solving isn&apos;t a skill — it&apos;s just how I
-            think. Also into music, photography, cooking, and a bunch of other
-            things.
+            I'm Jerome, a Data Science and Math student at Northeastern. I love
+            tackling hard problems and I'm always trying to learn something new.
           </p>
         </div>
 
@@ -149,7 +146,7 @@ export default function Hero() {
             }}
           />
           <span style={{ fontSize: "11px", color: "var(--text-dim)" }}>
-            incoming ML intern @ Regeneron · summer 2026
+            ML intern @ Regeneron · summer 2026
           </span>
         </div>
       </div>
