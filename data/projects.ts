@@ -3,9 +3,10 @@ export interface Project {
   name: string;
   desc: string;
   detail?: string;
+  paper?: string;
   tags: string[];
   link?: string;
-  status?: "shipped" | "in progress";
+  status?: "shipped" | "in progress" | "paper";
 }
 
 export const projects: Project[] = [
@@ -16,6 +17,7 @@ export const projects: Project[] = [
     detail:
       "Duplicate task detection across project management tools. Built a semantic similarity pipeline with SBERT embeddings, pgvector HNSW indexing, and OAuth integrations across Slack, Jira, and Trello. Deployed to DigitalOcean under real client deadlines.",
     tags: ["SBERT", "pgvector", "FastAPI", "OAuth 2.0", "DigitalOcean"],
+    link: "https://github.com/GenerateNU/unsprawl",
     status: "shipped",
   },
   {
@@ -34,6 +36,7 @@ export const projects: Project[] = [
     detail:
       "DQN agent trained to play Blackjack in a custom Gymnasium environment using experience replay and epsilon-greedy exploration. Wrote an accompanying paper on the mathematical foundations of Deep Q-Learning.",
     tags: ["DQN", "Gymnasium", "PyTorch", "Reinforcement Learning"],
+    link: "https://github.com/Jrodrigo06/BlackJackOpenCV",
   },
   {
     num: "04",
@@ -42,6 +45,7 @@ export const projects: Project[] = [
     detail:
       "Reimplementation of GraphDTA for drug-target binding affinity prediction using PyTorch Geometric and graph neural networks. Wrote a paper on the implementation and the math behind GNNs applied to molecular data.",
     tags: ["PyTorch Geometric", "GNN", "PyTorch"],
+    link: "https://github.com/Jrodrigo06/GraphDTA-Replication",
   },
   {
     num: "05",
@@ -50,5 +54,6 @@ export const projects: Project[] = [
     detail:
       "Web app that answers nutrition questions using RAG over health research documents. Semantic chunking, Llama 2 for generation, ChromaDB for vector storage, FastAPI backend, React frontend, Docker deployment.",
     tags: ["RAG", "Llama 2", "ChromaDB", "FastAPI", "React", "Docker"],
+    link: "https://github.com/Jrodrigo06/llm-health-recommender",
   },
 ];
