@@ -24,6 +24,11 @@
 .DS_Store
 *.pem
 
+# photos: raw originals + embedding cache are derived/local (thumbs, display, photos.json, data/photos.ts are committed)
+/public/photos/raw/
+/scripts/.cache/
+/scripts/.venv/
+
 # debug
 npm-debug.log*
 yarn-debug.log*

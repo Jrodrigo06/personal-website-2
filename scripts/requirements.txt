@@ -1,0 +1,7 @@
+# Photo constellation pipeline (scripts/embed_photos.py)
+# CPU-only; no GPU required for ~75 images.
+torch
+transformers
+umap-learn
+Pillow
+numpy

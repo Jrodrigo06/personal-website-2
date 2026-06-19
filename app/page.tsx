@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
 import Music from "@/components/Music";
+import PhotosTeaser from "@/components/PhotosTeaser";
 
 export default function Home() {
   return (
@@ -19,6 +20,9 @@ export default function Home() {
           </section>
           <section id="music">
             <Music />
+          </section>
+          <section id="photos">
+            <PhotosTeaser />
           </section>
         </div>
       </main>
