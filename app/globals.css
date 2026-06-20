@@ -2,31 +2,31 @@
 
 /* moss — default theme */
 :root {
-    --bg: #080e06;
-    --bg-surface: #0d1509;
-    --bg-card: #16200f;
-    --bg-hover: #1e2c14;
-    --border-sub: #111a0d;
-    --border: #1c2a14;
-    --border-em: #2e4420;
-    --text-h1: #e0f0c8;
-    --text-h2: #c0d8a0;
-    --text-accent: #8ec86a;
-    --text-body: #7a9060;
-    --text-dim: #506640;
-    --text-ghost: #344828;
-    --badge-bg: #16200f;
-    --badge-text: #7ab85a;
-    --badge-border: #1c2a14;
-    --badge-amber: #b08a2a;
-    --tag-bg: #0a0f07;
-    --tag-border: #182010;
-    --tag-text: #4a6038;
-    --status-dot: #7ab85a;
-    --vinyl-bg: #0d1509;
-    --vinyl-ring: #1c2a14;
-    --wave: #4a7038;
-    --progress-fill: #7ab85a;
+  --bg: #090d07;
+  --bg-surface: #101808;
+  --bg-card: #182010;
+  --bg-hover: #202c18;
+  --border-sub: #161e10;
+  --border: #202c18;
+  --border-em: #2a3820;
+  --text-h1: #e8f0d8;
+  --text-h2: #c8d8a8;
+  --text-accent: #7ab858;
+  --text-body: #8a9878;
+  --text-dim: #6a7858;
+  --text-ghost: #4a5840;
+  --badge-bg: #101808;
+  --badge-text: #7ab858;
+  --badge-border: #2a3820;
+  --badge-amber: #b08a2a;
+  --tag-bg: #0c1008;
+  --tag-border: #1e2818;
+  --tag-text: #586048;
+  --status-dot: #7ab858;
+  --vinyl-bg: #101808;
+  --vinyl-ring: #202c18;
+  --wave: #586048;
+  --progress-fill: #7ab858;
 }
 
 /* sand — warm variant */
