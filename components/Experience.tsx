@@ -31,7 +31,10 @@ function ItemList({ items }: { items: Experience[] }) {
             gridTemplateColumns: "1fr auto",
             gap: "16px",
             padding: "11px 0",
-            borderBottom: "0.5px solid var(--border-sub)",
+            borderBottom:
+              i === items.length - 1
+                ? "none"
+                : "0.5px solid var(--border-sub)",
           }}
         >
           <div>
@@ -104,7 +107,6 @@ export default function Experience() {
     <div
       style={{
         padding: "24px 28px",
-        borderBottom: "0.5px solid var(--border-sub)",
       }}
     >
       <SectionHeader label="experience" />

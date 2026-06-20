@@ -47,9 +47,10 @@ export default function PhotosTeaser() {
             overflow: "hidden",
           }}
         >
-          {nodes.map((node) => (
+          {nodes.map((node, i) => (
             <span
               key={node.filename}
+              className="photo-dot"
               style={{
                 position: "absolute",
                 left: `${6 + node.x * 88}%`,
@@ -58,6 +59,8 @@ export default function PhotosTeaser() {
                 height: "4px",
                 borderRadius: "50%",
                 background: "var(--text-dim)",
+                animationDelay: `${-(i * 0.7).toFixed(2)}s`,
+                animationDuration: `${8 + (i % 5)}s`,
               }}
             />
           ))}

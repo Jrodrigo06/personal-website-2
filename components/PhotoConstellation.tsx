@@ -331,24 +331,60 @@ export default function PhotoConstellation({
         ))}
       </div>
 
-      {/* drag-to-explore hint — fades out after the first drag */}
+      {/* intro explainer — how the map is built; fades out after the first drag */}
       <div
         style={{
           position: "absolute",
-          bottom: "16px",
+          top: "50%",
           left: "50%",
-          transform: "translateX(-50%)",
+          transform: "translate(-50%, -50%)",
           zIndex: 20,
           pointerEvents: "none",
-          fontSize: "11px",
-          letterSpacing: "0.18em",
-          textTransform: "uppercase",
-          color: "var(--text-dim)",
-          opacity: hasInteracted ? 0 : 0.85,
-          transition: "opacity 0.5s ease",
+          width: "min(360px, 78vw)",
+          padding: "22px 26px",
+          textAlign: "center",
+          background: "color-mix(in srgb, var(--bg-surface) 78%, transparent)",
+          border: "0.5px solid var(--border)",
+          borderRadius: "12px",
+          backdropFilter: "blur(6px)",
+          opacity: hasInteracted ? 0 : 1,
+          transition: "opacity 0.6s ease",
         }}
       >
-        drag to explore
+        <div
+          style={{
+            fontSize: "10px",
+            letterSpacing: "0.12em",
+            textTransform: "uppercase",
+            color: "var(--text-ghost)",
+          }}
+        >
+          how this photo map is arranged
+        </div>
+        <p
+          style={{
+            margin: "10px 0 0",
+            fontSize: "13px",
+            lineHeight: 1.5,
+            color: "var(--text-body)",
+          }}
+        >
+          A neural network (<span style={{ color: "var(--text-accent)" }}>CLIP</span>)
+          reads every photo into a 512-dimension embedding, and{" "}
+          <span style={{ color: "var(--text-accent)" }}>UMAP</span> folds those down
+          to this 2D map, so visually similar photos cluster together.
+        </p>
+        <div
+          style={{
+            marginTop: "16px",
+            fontSize: "11px",
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            color: "var(--text-dim)",
+          }}
+        >
+          drag to explore
+        </div>
       </div>
 
       {/* full-photo modal */}

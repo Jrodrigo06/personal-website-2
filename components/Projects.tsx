@@ -36,7 +36,6 @@ export default function Projects() {
     <div
       style={{
         padding: "24px 28px",
-        borderBottom: "0.5px solid var(--border-sub)",
       }}
     >
       {/* section header */}
@@ -58,12 +57,17 @@ export default function Projects() {
 
       {/* items */}
       <div style={{ marginTop: "8px" }}>
-        {projects.map((project) => {
+        {projects.map((project, i) => {
           const isOpen = openNum === project.num;
           return (
             <div
               key={project.num}
-              style={{ borderBottom: "0.5px solid var(--border-sub)" }}
+              style={{
+                borderBottom:
+                  i === projects.length - 1
+                    ? "none"
+                    : "0.5px solid var(--border-sub)",
+              }}
             >
               {/* clickable row */}
               <div
