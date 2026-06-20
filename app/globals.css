@@ -80,6 +80,13 @@ body {
     width: 100%;
 }
 
+.music-row {
+    transition: background 0.15s ease;
+}
+.music-row:hover {
+    background: var(--bg-hover);
+}
+
 @keyframes wave {
     0%,
     100% {
