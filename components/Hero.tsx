@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { LINKS } from "@/config/links";
 
 export default function Hero() {
   return (
@@ -112,7 +113,7 @@ export default function Hero() {
             view projects
           </a>
           <a
-            href="https://github.com/Jrodrigo06"
+            href={LINKS.github}
             style={{
               fontSize: "11px",
               padding: "6px 16px",
@@ -124,7 +125,7 @@ export default function Hero() {
             github
           </a>
           <a
-            href="https://www.linkedin.com/in/jrodrigo2028/"
+            href={LINKS.linkedin}
             style={{
               fontSize: "11px",
               padding: "6px 16px",
@@ -134,6 +135,18 @@ export default function Hero() {
             }}
           >
             linkedin
+          </a>
+          <a
+            href={LINKS.resume}
+            style={{
+              fontSize: "11px",
+              padding: "6px 16px",
+              borderRadius: "20px",
+              color: "var(--text-dim)",
+              border: "0.5px solid var(--border)",
+            }}
+          >
+            resume
           </a>
         </div>
 

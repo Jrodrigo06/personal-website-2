@@ -4,6 +4,7 @@ import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
 import Music from "@/components/Music";
 import PhotosTeaser from "@/components/PhotosTeaser";
+import { LINKS } from "@/config/links";
 
 export default function Home() {
   return (
@@ -32,13 +33,13 @@ export default function Home() {
             jerome rodrigo · 2026
           </span>
           <div className="flex items-center" style={{ gap: "16px" }}>
-            <a href="https://github.com/Jrodrigo06" style={{ fontSize: "11px", color: "var(--text-dim)" }}>
+            <a href={LINKS.github} style={{ fontSize: "11px", color: "var(--text-dim)" }}>
               github
             </a>
-            <a href="https://www.linkedin.com/in/jrodrigo2028/" style={{ fontSize: "11px", color: "var(--text-dim)" }}>
+            <a href={LINKS.linkedin} style={{ fontSize: "11px", color: "var(--text-dim)" }}>
               linkedin
             </a>
-            <a href="/resume.pdf" style={{ fontSize: "11px", color: "var(--text-dim)" }}>
+            <a href={LINKS.resume} style={{ fontSize: "11px", color: "var(--text-dim)" }}>
               resume
             </a>
           </div>
