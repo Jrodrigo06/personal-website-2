@@ -7,7 +7,6 @@ export default function Hero() {
       className="relative"
       style={{
         padding: "52px 28px 44px",
-        borderBottom: "0.5px solid var(--border-sub)",
       }}
     >
       {/* top section */}
@@ -151,14 +150,7 @@ export default function Hero() {
         </div>
 
         <div className="flex items-center" style={{ gap: "8px" }}>
-          <span
-            style={{
-              width: "6px",
-              height: "6px",
-              borderRadius: "50%",
-              background: "var(--status-dot)",
-            }}
-          />
+          <span className="status-dot" />
           <span style={{ fontSize: "11px", color: "var(--text-dim)" }}>
             ML intern @ Regeneron · summer 2026
           </span>
