@@ -5,9 +5,16 @@ import {
   useCallback,
   useEffect,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
+import {
+  motion,
+  useMotionValue,
+  useTransform,
+  type MotionValue,
+} from "framer-motion";
 import type { PhotoNode } from "@/data/photos";
 
 interface PhotoConstellationProps {
@@ -19,8 +26,18 @@ interface PhotoConstellationProps {
 const LAYOUT_SIZE = 1600;
 // Pointer travel (px) beyond which a press counts as a drag, not a click.
 const DRAG_THRESHOLD = 4;
-// Hover thumbnail tile size (px, longest edge).
-const TILE = 132;
+// Uniform resting thumbnail size (px, square).
+const NODE_SIZE = 80;
+// Thumbnail size (px) reached on hover.
+const HOVER_SIZE = 110;
+// Hover scale-up factor.
+const HOVER_SCALE = HOVER_SIZE / NODE_SIZE;
+// Parallax strength — every photo drifts the same subtle amount.
+const PARALLAX_FACTOR = 0.4;
+// Max parallax shift (px) reached at the screen edges.
+const MAX_SHIFT = 8;
+
+const ACCENT_RGB = "142, 200, 106"; // var(--text-accent) as rgb for glow alpha
 
 interface Pan {
   x: number;
@@ -34,11 +51,96 @@ interface DragStart {
   panY: number;
 }
 
-function tileSize(node: PhotoNode): { w: number; h: number } {
-  const ratio = node.width > 0 && node.height > 0 ? node.width / node.height : 1;
-  return ratio >= 1
-    ? { w: TILE, h: Math.round(TILE / ratio) }
-    : { w: Math.round(TILE * ratio), h: TILE };
+function clamp(v: number, lo: number, hi: number): number {
+  return Math.min(hi, Math.max(lo, v));
+}
+
+interface NodeProps {
+  node: PhotoNode;
+  parallaxX: MotionValue<number>;
+  parallaxY: MotionValue<number>;
+  isHovered: boolean;
+  onEnter: () => void;
+  onLeave: () => void;
+  onClick: () => void;
+}
+
+function ConstellationNode({
+  node,
+  parallaxX,
+  parallaxY,
+  isHovered,
+  onEnter,
+  onLeave,
+  onClick,
+}: NodeProps) {
+  const x = useTransform(parallaxX, (v) => v * MAX_SHIFT * PARALLAX_FACTOR);
+  const y = useTransform(parallaxY, (v) => v * MAX_SHIFT * PARALLAX_FACTOR);
+
+  const glow = isHovered
+    ? `0 0 34px 6px rgba(${ACCENT_RGB}, 0.45)`
+    : `0 0 18px 2px rgba(${ACCENT_RGB}, 0.16)`;
+
+  const zIndex = isHovered ? 10 : 2;
+  const hitSize = HOVER_SIZE;
+
+  return (
+    <div
+      onPointerEnter={onEnter}
+      onPointerLeave={onLeave}
+      onClick={onClick}
+      style={{
+        position: "absolute",
+        left: `${node.x * LAYOUT_SIZE}px`,
+        top: `${node.y * LAYOUT_SIZE}px`,
+        // Hit box is larger than the tile so hover/click is forgiving.
+        width: `${hitSize}px`,
+        height: `${hitSize}px`,
+        transform: "translate(-50%, -50%)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        zIndex,
+        cursor: "pointer",
+      }}
+    >
+      <motion.div
+        style={{ x, y }}
+        animate={{ scale: isHovered ? HOVER_SCALE : 1 }}
+        transition={{ type: "spring", stiffness: 260, damping: 26 }}
+      >
+        <div
+          style={{
+            width: `${NODE_SIZE}px`,
+            height: `${NODE_SIZE}px`,
+            borderRadius: "8px",
+            overflow: "hidden",
+            background: "var(--bg-surface)",
+            border: isHovered
+              ? "0.5px solid var(--border-em)"
+              : "0.5px solid var(--border)",
+            boxShadow: glow,
+            transition: "box-shadow 220ms ease, border-color 220ms ease",
+          }}
+        >
+          <Image
+            src={node.thumb}
+            alt={node.filename}
+            width={NODE_SIZE}
+            height={NODE_SIZE}
+            sizes={`${HOVER_SIZE}px`}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              display: "block",
+            }}
+            draggable={false}
+          />
+        </div>
+      </motion.div>
+    </div>
+  );
 }
 
 export default function PhotoConstellation({
@@ -51,8 +153,26 @@ export default function PhotoConstellation({
 
   const [pan, setPan] = useState<Pan>({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [selected, setSelected] = useState<PhotoNode | null>(null);
+  const [hasInteracted, setHasInteracted] = useState(false);
+
+  // Mean of all photo coords — the view centers here so clustered photos don't
+  // leave large empty margins.
+  const centroid = useMemo(() => {
+    if (photos.length === 0) return { x: 0.5, y: 0.5 };
+    let sx = 0;
+    let sy = 0;
+    for (const p of photos) {
+      sx += p.x;
+      sy += p.y;
+    }
+    return { x: sx / photos.length, y: sy / photos.length };
+  }, [photos]);
+
+  // Normalized cursor position (-1..1 from container center) drives parallax.
+  const parallaxX = useMotionValue(0);
+  const parallaxY = useMotionValue(0);
 
   // Center the virtual layout within the container on mount / resize.
   useLayoutEffect(() => {
@@ -61,14 +181,14 @@ export default function PhotoConstellation({
     const center = () => {
       const rect = el.getBoundingClientRect();
       setPan({
-        x: (rect.width - LAYOUT_SIZE) / 2,
-        y: (rect.height - LAYOUT_SIZE) / 2,
+        x: rect.width / 2 - centroid.x * LAYOUT_SIZE,
+        y: rect.height / 2 - centroid.y * LAYOUT_SIZE,
       });
     };
     center();
     window.addEventListener("resize", center);
     return () => window.removeEventListener("resize", center);
-  }, []);
+  }, [centroid]);
 
   // Esc closes the modal.
   useEffect(() => {
@@ -79,6 +199,17 @@ export default function PhotoConstellation({
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [selected]);
+
+  const updateParallax = useCallback(
+    (clientX: number, clientY: number) => {
+      const el = containerRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      parallaxX.set(clamp((clientX - (rect.left + rect.width / 2)) / (rect.width / 2), -1, 1));
+      parallaxY.set(clamp((clientY - (rect.top + rect.height / 2)) / (rect.height / 2), -1, 1));
+    },
+    [parallaxX, parallaxY],
+  );
 
   const onPointerDown = useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
@@ -95,16 +226,21 @@ export default function PhotoConstellation({
     [pan],
   );
 
-  const onPointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
-    const start = dragStart.current;
-    if (!start) return;
-    const dx = e.clientX - start.pointerX;
-    const dy = e.clientY - start.pointerY;
-    if (Math.abs(dx) > DRAG_THRESHOLD || Math.abs(dy) > DRAG_THRESHOLD) {
-      movedRef.current = true;
-    }
-    setPan({ x: start.panX + dx, y: start.panY + dy });
-  }, []);
+  const onPointerMove = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      updateParallax(e.clientX, e.clientY);
+      const start = dragStart.current;
+      if (!start) return;
+      const dx = e.clientX - start.pointerX;
+      const dy = e.clientY - start.pointerY;
+      if (Math.abs(dx) > DRAG_THRESHOLD || Math.abs(dy) > DRAG_THRESHOLD) {
+        if (!movedRef.current) setHasInteracted(true);
+        movedRef.current = true;
+      }
+      setPan({ x: start.panX + dx, y: start.panY + dy });
+    },
+    [updateParallax],
+  );
 
   const onPointerUp = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
     dragStart.current = null;
@@ -113,6 +249,12 @@ export default function PhotoConstellation({
       e.currentTarget.releasePointerCapture(e.pointerId);
     }
   }, []);
+
+  const onContainerLeave = useCallback(() => {
+    parallaxX.set(0);
+    parallaxY.set(0);
+    setHoveredIndex(null);
+  }, [parallaxX, parallaxY]);
 
   const onNodeClick = useCallback((node: PhotoNode) => {
     // Suppress the click that ends a drag.
@@ -148,6 +290,7 @@ export default function PhotoConstellation({
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
+      onPointerLeave={onContainerLeave}
       style={{
         position: "relative",
         overflow: "hidden",
@@ -158,22 +301,6 @@ export default function PhotoConstellation({
         cursor: isDragging ? "grabbing" : "grab",
       }}
     >
-      {/* overline */}
-      <div
-        style={{
-          position: "absolute",
-          top: "16px",
-          left: "16px",
-          zIndex: 2,
-          fontSize: "10px",
-          letterSpacing: "0.12em",
-          color: "var(--text-ghost)",
-          pointerEvents: "none",
-        }}
-      >
-        constellation · {photos.length} frames
-      </div>
-
       {/* pan layer */}
       <div
         style={{
@@ -183,73 +310,45 @@ export default function PhotoConstellation({
           width: `${LAYOUT_SIZE}px`,
           height: `${LAYOUT_SIZE}px`,
           transform: `translate(${pan.x}px, ${pan.y}px)`,
+          zIndex: 1,
         }}
       >
-        {photos.map((node) => {
-          const isHovered = hoveredId === node.filename;
-          const left = node.x * LAYOUT_SIZE;
-          const top = node.y * LAYOUT_SIZE;
-          const { w, h } = tileSize(node);
-          return (
-            <div
-              key={node.filename}
-              onPointerEnter={() => {
-                if (!isDragging) setHoveredId(node.filename);
-              }}
-              onPointerLeave={() =>
-                setHoveredId((cur) => (cur === node.filename ? null : cur))
-              }
-              onClick={() => onNodeClick(node)}
-              style={{
-                position: "absolute",
-                left: `${left}px`,
-                top: `${top}px`,
-                transform: "translate(-50%, -50%)",
-                zIndex: isHovered ? 3 : 1,
-                cursor: "pointer",
-              }}
-            >
-              {isHovered ? (
-                <div
-                  style={{
-                    width: `${w}px`,
-                    height: `${h}px`,
-                    borderRadius: "6px",
-                    overflow: "hidden",
-                    background: "var(--bg-surface)",
-                    border: "0.5px solid var(--border-em)",
-                    boxShadow: "0 6px 20px rgba(0,0,0,0.5)",
-                  }}
-                >
-                  <Image
-                    src={node.thumb}
-                    alt={node.filename}
-                    width={w}
-                    height={h}
-                    sizes={`${TILE}px`}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      display: "block",
-                    }}
-                    draggable={false}
-                  />
-                </div>
-              ) : (
-                <span
-                  style={{
-                    display: "block",
-                    width: "5px",
-                    height: "5px",
-                    borderRadius: "50%",
-                    background: "var(--text-dim)",
-                  }}
-                />
-              )}
-            </div>
-          );
-        })}
+        {photos.map((node, index) => (
+          <ConstellationNode
+            key={node.filename}
+            node={node}
+            parallaxX={parallaxX}
+            parallaxY={parallaxY}
+            isHovered={hoveredIndex === index}
+            onEnter={() => {
+              if (!isDragging) setHoveredIndex(index);
+            }}
+            onLeave={() =>
+              setHoveredIndex((cur) => (cur === index ? null : cur))
+            }
+            onClick={() => onNodeClick(node)}
+          />
+        ))}
+      </div>
+
+      {/* drag-to-explore hint — fades out after the first drag */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: "16px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: 20,
+          pointerEvents: "none",
+          fontSize: "11px",
+          letterSpacing: "0.18em",
+          textTransform: "uppercase",
+          color: "var(--text-dim)",
+          opacity: hasInteracted ? 0 : 0.85,
+          transition: "opacity 0.5s ease",
+        }}
+      >
+        drag to explore
       </div>
 
       {/* full-photo modal */}

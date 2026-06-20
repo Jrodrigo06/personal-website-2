@@ -18,17 +18,35 @@ export default function PhotosPage() {
           pointerEvents: "none",
         }}
       >
-        <h1
+        <div
           style={{
-            fontSize: "20px",
-            fontWeight: 500,
-            fontFamily: "var(--font-serif)",
-            color: "var(--text-h1)",
-            letterSpacing: "-0.025em",
+            display: "flex",
+            flexDirection: "column",
+            gap: "5px",
           }}
         >
-          Photos
-        </h1>
+          <span
+            style={{
+              fontSize: "10px",
+              letterSpacing: "0.12em",
+              color: "var(--text-ghost)",
+            }}
+          >
+            constellation · {photos.length} frames
+          </span>
+          <h1
+            style={{
+              fontSize: "20px",
+              fontWeight: 500,
+              fontFamily: "var(--font-serif)",
+              color: "var(--text-h1)",
+              letterSpacing: "-0.025em",
+              lineHeight: 1,
+            }}
+          >
+            Photos
+          </h1>
+        </div>
         <Link
           href="/"
           style={{

@@ -89,3 +89,13 @@ body {
         transform: scaleY(1);
     }
 }
+
+@keyframes constellation-pulse {
+    0%,
+    100% {
+        opacity: 0.05;
+    }
+    50% {
+        opacity: 0.2;
+    }
+}

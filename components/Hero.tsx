@@ -85,6 +85,7 @@ export default function Hero() {
             alt="Jerome Rodrigo"
             fill
             sizes="108px"
+            quality={90}
             style={{ objectFit: "cover" }}
             priority
           />
