@@ -1,1 +1,1 @@
-export const THEME: "moss" | "sand" = "moss";
+export const THEME: "moss" | "sand" = "sand";

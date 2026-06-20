@@ -112,7 +112,7 @@ export default function Hero() {
             view projects
           </a>
           <a
-            href="#"
+            href="https://github.com/Jrodrigo06"
             style={{
               fontSize: "11px",
               padding: "6px 16px",
@@ -124,7 +124,7 @@ export default function Hero() {
             github
           </a>
           <a
-            href="#"
+            href="https://www.linkedin.com/in/jrodrigo2028/"
             style={{
               fontSize: "11px",
               padding: "6px 16px",

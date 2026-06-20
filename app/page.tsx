@@ -32,13 +32,13 @@ export default function Home() {
             jerome rodrigo · 2026
           </span>
           <div className="flex items-center" style={{ gap: "16px" }}>
-            <a href="#" style={{ fontSize: "11px", color: "var(--text-dim)" }}>
+            <a href="https://github.com/Jrodrigo06" style={{ fontSize: "11px", color: "var(--text-dim)" }}>
               github
             </a>
-            <a href="#" style={{ fontSize: "11px", color: "var(--text-dim)" }}>
+            <a href="https://www.linkedin.com/in/jrodrigo2028/" style={{ fontSize: "11px", color: "var(--text-dim)" }}>
               linkedin
             </a>
-            <a href="#" style={{ fontSize: "11px", color: "var(--text-dim)" }}>
+            <a href="/resume.pdf" style={{ fontSize: "11px", color: "var(--text-dim)" }}>
               resume
             </a>
           </div>
