@@ -80,6 +80,11 @@ body {
     width: 100%;
 }
 
+/* offset anchor scrolling so the sticky nav doesn't cover section headers */
+section[id] {
+    scroll-margin-top: 72px;
+}
+
 .music-row {
     transition: background 0.15s ease;
 }
