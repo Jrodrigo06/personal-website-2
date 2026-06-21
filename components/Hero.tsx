@@ -11,7 +11,7 @@ export default function Hero() {
     >
       {/* top section */}
       <div
-        className="relative grid"
+        className="relative grid hero-top"
         style={{ zIndex: 1, gridTemplateColumns: "1fr 118px", gap: "32px" }}
       >
         <div>
@@ -26,6 +26,7 @@ export default function Hero() {
               }}
             />
             <span
+              className="hero-overline"
               style={{
                 fontSize: "10px",
                 color: "var(--text-ghost)",
@@ -70,7 +71,7 @@ export default function Hero() {
 
         {/* photo */}
         <div
-          className="relative"
+          className="relative hero-photo"
           style={{
             width: "108px",
             height: "136px",
@@ -94,10 +95,10 @@ export default function Hero() {
 
       {/* bottom section */}
       <div
-        className="relative flex items-center justify-between"
+        className="relative flex items-center justify-between hero-bottom"
         style={{ zIndex: 1, marginTop: "28px" }}
       >
-        <div className="flex items-center" style={{ gap: "8px" }}>
+        <div className="flex items-center hero-cta" style={{ gap: "8px" }}>
           <a
             href="#projects"
             style={{

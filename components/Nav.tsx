@@ -62,7 +62,7 @@ export default function Nav() {
               borderRadius: "20px",
             }}
           >
-            photos ↗
+            photos ↗{"︎"}
           </a>
         </div>
       </div>

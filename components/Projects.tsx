@@ -148,6 +148,7 @@ export default function Projects() {
                   )}
                   {project.date && (
                     <span
+                      className="mobile-hide-date"
                       style={{
                         marginLeft: "auto",
                         fontSize: "10px",

@@ -88,6 +88,7 @@ function ItemList({ items }: { items: Experience[] }) {
           </div>
 
           <div
+            className="mobile-hide-date"
             style={{
               fontSize: "10px",
               fontFamily: "monospace",
