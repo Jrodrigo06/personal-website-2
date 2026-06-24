@@ -39,9 +39,6 @@ export default function Home() {
             <a href={LINKS.linkedin} style={{ fontSize: "11px", color: "var(--text-dim)" }}>
               linkedin
             </a>
-            <a href={LINKS.resume} style={{ fontSize: "11px", color: "var(--text-dim)" }}>
-              resume
-            </a>
           </div>
         </div>
       </footer>
