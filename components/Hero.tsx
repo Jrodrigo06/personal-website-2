@@ -136,18 +136,6 @@ export default function Hero() {
           >
             linkedin
           </a>
-          <a
-            href={LINKS.resume}
-            style={{
-              fontSize: "11px",
-              padding: "6px 16px",
-              borderRadius: "20px",
-              color: "var(--text-dim)",
-              border: "0.5px solid var(--border)",
-            }}
-          >
-            resume
-          </a>
         </div>
 
         <div className="flex items-center" style={{ gap: "8px" }}>
