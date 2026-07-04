@@ -33,10 +33,6 @@ function badgeStyle(status: NonNullable<Project["status"]>): {
 
 function projectLinks(project: Project): { href: string; label: string }[] {
   return [
-    project.paper && {
-      href: project.paper,
-      label: project.paperLabel ?? "read paper",
-    },
     project.link && { href: project.link, label: "view on github" },
     project.demo && { href: project.demo, label: "live demo" },
   ].filter(Boolean) as { href: string; label: string }[];

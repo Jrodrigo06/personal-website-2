@@ -12,8 +12,6 @@ export interface Project {
   name: string;
   desc: string;
   detail?: string;
-  paper?: string;
-  paperLabel?: string; // overrides the default "read paper" link text (e.g. "design doc")
   demo?: string; // optional live-demo URL
   previews?: StaticImageData[]; // optional preview images shown in the modal
   tags: string[];
@@ -31,8 +29,6 @@ export const projects: Project[] = [
       "Led development at Generate for a client-commissioned AI task management platform. Engineers were losing work to duplicate tasks scattered across Slack, Jira, and Trello — Unsprawl consolidates them and uses semantic similarity to surface and deduplicate across all three. Led the technical implementation: SBERT embeddings, pgvector with HNSW indexing, OAuth 2.0 integrations, and a full duplicate detection engine. Shipped to the client. The design doc covers architecture, database schema, auth flows, integration pipelines, and the detection engine.",
     tags: ["SBERT", "pgvector", "FastAPI", "OAuth 2.0", "DigitalOcean"],
     link: "https://github.com/GenerateNU/unsprawl",
-    paper: "/unsprawl.pdf",
-    paperLabel: "design doc",
     status: "shipped",
     date: "Sep – Dec 2025",
     previews: [unsprawl1, unsprawl2],
@@ -53,8 +49,6 @@ export const projects: Project[] = [
       "Implemented a Deep Q-Network agent in a custom Gymnasium environment. The interesting problem was whether a neural network could learn Blackjack's optimal strategy through trial and error alone. Wrote an accompanying paper examining the mathematical foundations of DQNs and why they work for this problem.",
     tags: ["DQN", "Gymnasium", "PyTorch", "Reinforcement Learning"],
     link: "https://github.com/Jrodrigo06/BlackJackOpenCV",
-    paper: "/blackjackrl.pdf",
-    paperLabel: "read paper",
     date: "Mar 2026",
     previews: [blackjackrl1, blackjackrl2],
   },
@@ -66,8 +60,6 @@ export const projects: Project[] = [
       "Reimplementation of the GraphDTA architecture for predicting drug-target binding affinity — a core problem in drug discovery. Used PyTorch Geometric to represent molecular structure as a graph. Wrote a paper on the implementation and the math behind graph neural networks applied to molecular data.",
     tags: ["PyTorch Geometric", "GNN", "PyTorch"],
     link: "https://github.com/Jrodrigo06/GraphDTA-Replication",
-    paper: "/graphdta.pdf",
-    paperLabel: "read paper",
     date: "Aug 2025",
     previews: [graphdta1, graphdta2],
   },
