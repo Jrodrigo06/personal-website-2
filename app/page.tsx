@@ -2,6 +2,7 @@ import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
+import Writing from "@/components/Writing";
 import Music from "@/components/Music";
 import PhotosTeaser from "@/components/PhotosTeaser";
 import { LINKS } from "@/config/links";
@@ -18,6 +19,9 @@ export default function Home() {
           </section>
           <section id="projects">
             <Projects />
+          </section>
+          <section id="writing">
+            <Writing />
           </section>
           <section id="music">
             <Music />
