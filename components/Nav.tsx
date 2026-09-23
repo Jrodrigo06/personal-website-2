@@ -48,7 +48,7 @@ export default function Nav() {
             <a
               key={link.href}
               href={link.href}
-              style={{ fontSize: "11px", color: "var(--text-dim)" }}
+              style={{ fontSize: "11px", color: "var(--text-body)" }}
             >
               {link.label}
             </a>

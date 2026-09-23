@@ -78,7 +78,7 @@ function ItemList({ items }: { items: Experience[] }) {
               <div
                 style={{
                   fontSize: "11px",
-                  color: "var(--text-ghost)",
+                  color: "var(--text-body)",
                   lineHeight: 1.5,
                 }}
               >

@@ -72,7 +72,7 @@ export default function Writing() {
               <div
                 style={{
                   fontSize: "11px",
-                  color: "var(--text-ghost)",
+                  color: "var(--text-body)",
                   lineHeight: 1.5,
                 }}
               >

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { LINKS } from "@/config/links";
 
 export default function Hero() {
@@ -10,92 +9,75 @@ export default function Hero() {
       }}
     >
       {/* top section */}
-      <div
-        className="relative grid hero-top"
-        style={{ zIndex: 1, gridTemplateColumns: "1fr 118px", gap: "32px" }}
-      >
-        <div>
-          {/* overline */}
-          <div className="flex items-center" style={{ gap: "8px" }}>
-            <span
-              style={{
-                width: "4px",
-                height: "4px",
-                borderRadius: "50%",
-                background: "var(--text-accent)",
-              }}
-            />
-            <span
-              className="hero-overline"
-              style={{
-                fontSize: "10px",
-                color: "var(--text-ghost)",
-                letterSpacing: "0.12em",
-              }}
-            >
-              northeastern &apos;28 · data science &amp; mathematics · boston
-            </span>
-          </div>
-
-          {/* name */}
-          <h1
+      <div className="relative" style={{ zIndex: 1 }}>
+        {/* overline */}
+        <div className="flex items-center" style={{ gap: "8px" }}>
+          <span
             style={{
-              fontSize: "40px",
-              fontWeight: 500,
-              fontFamily: "var(--font-serif)",
-              color: "var(--text-h1)",
-              letterSpacing: "-0.025em",
-              lineHeight: 1.0,
-              marginTop: "16px",
-              marginBottom: "20px",
+              width: "4px",
+              height: "4px",
+              borderRadius: "50%",
+              background: "var(--text-accent)",
+            }}
+          />
+          <span
+            className="hero-overline"
+            style={{
+              fontSize: "10px",
+              color: "var(--text-ghost)",
+              letterSpacing: "0.12em",
             }}
           >
-            Jerome
-            <br />
-            Rodrigo
-          </h1>
-
-          {/* bio */}
-          <p
-            style={{
-              fontSize: "13px",
-              color: "var(--text-body)",
-              lineHeight: 1.85,
-              maxWidth: "360px",
-            }}
-          >
-            I'm Jerome, a Data Science and Math student at Northeastern. I love
-            tackling hard problems and I'm always trying to learn something new.
-          </p>
+            northeastern &apos;28 · data science &amp; mathematics · boston
+          </span>
         </div>
 
-        {/* photo */}
-        <div
-          className="relative hero-photo"
+        {/* name */}
+        <h1
           style={{
-            width: "108px",
-            height: "136px",
-            background: "var(--bg-surface)",
-            border: "0.5px solid var(--border)",
-            borderRadius: "6px",
-            overflow: "hidden",
+            fontSize: "40px",
+            fontWeight: 500,
+            fontFamily: "var(--font-serif)",
+            color: "var(--text-h1)",
+            letterSpacing: "-0.025em",
+            lineHeight: 1.0,
+            marginTop: "16px",
+            marginBottom: "14px",
           }}
         >
-          <Image
-            src="/hero.jpg"
-            alt="Jerome Rodrigo"
-            fill
-            sizes="108px"
-            quality={90}
-            style={{ objectFit: "cover" }}
-            priority
-          />
+          Jerome
+          <br />
+          Rodrigo
+        </h1>
+
+        {/* status pill */}
+        <div
+          className="flex items-center"
+          style={{ gap: "8px", marginBottom: "18px" }}
+        >
+          <span className="status-dot" />
+          <span style={{ fontSize: "11px", color: "var(--text-body)" }}>
+            ML intern @ Regeneron · summer 2026
+          </span>
         </div>
+
+        {/* bio */}
+        <p
+          style={{
+            fontSize: "13px",
+            color: "var(--text-body)",
+            lineHeight: 1.85,
+            maxWidth: "360px",
+          }}
+        >
+          I'm Jerome, a Data Science and Math student at Northeastern. I love
+          tackling hard problems and I'm always trying to learn something new.
+        </p>
       </div>
 
       {/* bottom section */}
       <div
-        className="relative flex items-center justify-between hero-bottom"
+        className="relative flex items-center hero-bottom"
         style={{ zIndex: 1, marginTop: "28px" }}
       >
         <div className="flex items-center hero-cta" style={{ gap: "8px" }}>
@@ -118,7 +100,7 @@ export default function Hero() {
               fontSize: "11px",
               padding: "6px 16px",
               borderRadius: "20px",
-              color: "var(--text-dim)",
+              color: "var(--text-body)",
               border: "0.5px solid var(--border)",
             }}
           >
@@ -130,19 +112,12 @@ export default function Hero() {
               fontSize: "11px",
               padding: "6px 16px",
               borderRadius: "20px",
-              color: "var(--text-dim)",
+              color: "var(--text-body)",
               border: "0.5px solid var(--border)",
             }}
           >
             linkedin
           </a>
-        </div>
-
-        <div className="flex items-center" style={{ gap: "8px" }}>
-          <span className="status-dot" />
-          <span style={{ fontSize: "11px", color: "var(--text-dim)" }}>
-            ML intern @ Regeneron · summer 2026
-          </span>
         </div>
       </div>
     </header>

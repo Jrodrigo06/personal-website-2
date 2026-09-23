@@ -85,12 +85,6 @@ body {
     .page-container {
         padding: 0 24px;
     }
-    .hero-top {
-        grid-template-columns: 1fr !important;
-    }
-    .hero-photo {
-        display: none !important;
-    }
     .hero-overline {
         font-size: 9px !important;
         letter-spacing: 0.08em !important;
@@ -111,6 +105,19 @@ body {
 /* offset anchor scrolling so the sticky nav doesn't cover section headers */
 section[id] {
     scroll-margin-top: 72px;
+}
+
+.music-summary {
+    list-style: none;
+}
+.music-summary::-webkit-details-marker {
+    display: none;
+}
+.music-chevron {
+    transition: transform 0.15s ease;
+}
+.music-details[open] .music-chevron {
+    transform: rotate(90deg);
 }
 
 .music-row {
