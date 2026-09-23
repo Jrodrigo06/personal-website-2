@@ -12,6 +12,7 @@ import {
 import {
   motion,
   useMotionValue,
+  useReducedMotion,
   useTransform,
   type MotionValue,
 } from "framer-motion";
@@ -60,6 +61,7 @@ interface NodeProps {
   parallaxX: MotionValue<number>;
   parallaxY: MotionValue<number>;
   isHovered: boolean;
+  reducedMotion: boolean;
   onEnter: () => void;
   onLeave: () => void;
   onClick: () => void;
@@ -70,12 +72,17 @@ function ConstellationNode({
   parallaxX,
   parallaxY,
   isHovered,
+  reducedMotion,
   onEnter,
   onLeave,
   onClick,
 }: NodeProps) {
-  const x = useTransform(parallaxX, (v) => v * MAX_SHIFT * PARALLAX_FACTOR);
-  const y = useTransform(parallaxY, (v) => v * MAX_SHIFT * PARALLAX_FACTOR);
+  const x = useTransform(parallaxX, (v) =>
+    reducedMotion ? 0 : v * MAX_SHIFT * PARALLAX_FACTOR,
+  );
+  const y = useTransform(parallaxY, (v) =>
+    reducedMotion ? 0 : v * MAX_SHIFT * PARALLAX_FACTOR,
+  );
 
   const glow = isHovered
     ? `0 0 34px 6px rgba(${ACCENT_RGB}, 0.45)`
@@ -89,6 +96,15 @@ function ConstellationNode({
       onPointerEnter={onEnter}
       onPointerLeave={onLeave}
       onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onClick();
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      aria-label={`Open photo ${node.filename}`}
       style={{
         position: "absolute",
         left: `${node.x * LAYOUT_SIZE}px`,
@@ -106,8 +122,13 @@ function ConstellationNode({
     >
       <motion.div
         style={{ x, y }}
-        animate={{ scale: isHovered ? HOVER_SCALE : 1 }}
-        transition={{ type: "spring", stiffness: 260, damping: 26 }}
+        animate={{ scale: isHovered && !reducedMotion ? HOVER_SCALE : 1 }}
+        transition={{
+          type: reducedMotion ? "tween" : "spring",
+          duration: reducedMotion ? 0 : undefined,
+          stiffness: 260,
+          damping: 26,
+        }}
       >
         <div
           style={{
@@ -150,6 +171,7 @@ export default function PhotoConstellation({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const dragStart = useRef<DragStart | null>(null);
   const movedRef = useRef(false);
+  const reducedMotion = Boolean(useReducedMotion());
 
   const [pan, setPan] = useState<Pan>({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -221,6 +243,10 @@ export default function PhotoConstellation({
       };
       movedRef.current = false;
       setIsDragging(true);
+      // Pointer capture (below) routes pointerenter/leave to the container for
+      // the rest of the gesture, so whatever node was hovered when the drag
+      // started would otherwise stay stuck highlighted for the whole pan.
+      setHoveredIndex(null);
       e.currentTarget.setPointerCapture(e.pointerId);
     },
     [pan],
@@ -320,6 +346,7 @@ export default function PhotoConstellation({
             parallaxX={parallaxX}
             parallaxY={parallaxY}
             isHovered={hoveredIndex === index}
+            reducedMotion={reducedMotion}
             onEnter={() => {
               if (!isDragging) setHoveredIndex(index);
             }}
