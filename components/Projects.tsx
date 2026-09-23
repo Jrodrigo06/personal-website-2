@@ -2,54 +2,31 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { projects, type Project } from "@/data/projects";
+import SectionHeader from "@/components/ui/SectionHeader";
+import TechTag from "@/components/ui/TechTag";
+import StatusBadge, { type StatusTone } from "@/components/ui/StatusBadge";
 
-function badgeStyle(status: NonNullable<Project["status"]>): {
-  color: string;
-  background: string;
-  border: string;
-} {
-  if (status === "shipped") {
-    return {
-      color: "var(--badge-text)",
-      background: "var(--badge-bg)",
-      border: "0.5px solid var(--badge-border)",
-    };
-  }
-  if (status === "paper") {
-    return {
-      color: "var(--text-dim)",
-      background: "var(--bg-card)",
-      border: "0.5px solid var(--border)",
-    };
-  }
-  return {
-    color: "var(--badge-amber)",
-    background: "var(--badge-bg)",
-    border: "0.5px solid var(--badge-border)",
-  };
+const MAX_VISIBLE_TAGS = 4;
+
+function statusTone(status: NonNullable<Project["status"]>): StatusTone {
+  if (status === "shipped") return "accent";
+  if (status === "paper") return "muted";
+  return "amber";
 }
 
 function projectLinks(project: Project): { href: string; label: string }[] {
   return [
     project.link && { href: project.link, label: "view on github" },
-    project.demo && { href: project.demo, label: "live demo" },
+    project.demo && { href: project.demo, label: "open app" },
   ].filter(Boolean) as { href: string; label: string }[];
 }
-
-const tagStyle: React.CSSProperties = {
-  fontSize: "10px",
-  color: "var(--tag-text)",
-  background: "var(--tag-bg)",
-  border: "0.5px solid var(--tag-border)",
-  borderRadius: "8px",
-  padding: "2px 7px",
-};
 
 export default function Projects() {
   const [openNum, setOpenNum] = useState<string | null>(null);
   const openProject = projects.find((p) => p.num === openNum) ?? null;
+  const prefersReducedMotion = useReducedMotion();
 
   // close on Escape + lock body scroll while a modal is open
   useEffect(() => {
@@ -72,32 +49,31 @@ export default function Projects() {
         padding: "24px 28px",
       }}
     >
-      {/* section header */}
-      <div className="flex items-center" style={{ gap: "12px" }}>
-        <span
-          style={{
-            fontSize: "10px",
-            letterSpacing: "0.12em",
-            color: "var(--text-ghost)",
-          }}
-        >
-          projects
-        </span>
-        <span
-          className="flex-1"
-          style={{ height: "0.5px", background: "var(--border)" }}
-        />
-      </div>
+      <SectionHeader label="projects" />
 
       {/* items */}
       <div style={{ marginTop: "8px" }}>
         {projects.map((project, i) => {
           const hasDetail = Boolean(project.detail);
+          const visibleTags = project.tags.slice(0, MAX_VISIBLE_TAGS);
+          const hiddenCount = project.tags.length - visibleTags.length;
           return (
             <div
               key={project.num}
               onClick={hasDetail ? () => setOpenNum(project.num) : undefined}
-              className="grid items-start"
+              onKeyDown={
+                hasDetail
+                  ? (e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        setOpenNum(project.num);
+                      }
+                    }
+                  : undefined
+              }
+              role={hasDetail ? "button" : undefined}
+              tabIndex={hasDetail ? 0 : undefined}
+              className={`grid items-start${hasDetail ? " click-row" : ""}`}
               style={{
                 gridTemplateColumns: "24px 1fr 16px",
                 gap: "14px",
@@ -109,49 +85,20 @@ export default function Projects() {
                     : "0.5px solid var(--border-sub)",
               }}
             >
-              <div
-                style={{
-                  fontSize: "10px",
-                  fontFamily: "monospace",
-                  color: "var(--text-ghost)",
-                }}
-              >
-                {project.num}
-              </div>
+              <div className="row-date">{project.num}</div>
 
               <div>
                 <div className="flex items-center" style={{ gap: "8px" }}>
-                  <span
-                    style={{
-                      fontSize: "14px",
-                      fontWeight: 500,
-                      color: "var(--text-h2)",
-                    }}
-                  >
-                    {project.name}
-                  </span>
+                  <span className="row-title">{project.name}</span>
                   {project.status && (
-                    <span
-                      style={{
-                        fontSize: "10px",
-                        borderRadius: "20px",
-                        padding: "1px 8px",
-                        ...badgeStyle(project.status),
-                      }}
-                    >
+                    <StatusBadge tone={statusTone(project.status)}>
                       {project.status}
-                    </span>
+                    </StatusBadge>
                   )}
                   {project.date && (
                     <span
-                      className="mobile-hide-date"
-                      style={{
-                        marginLeft: "auto",
-                        fontSize: "10px",
-                        fontFamily: "monospace",
-                        color: "var(--text-ghost)",
-                        whiteSpace: "nowrap",
-                      }}
+                      className="mobile-hide-date row-date"
+                      style={{ marginLeft: "auto" }}
                     >
                       {project.date}
                     </span>
@@ -159,30 +106,26 @@ export default function Projects() {
                 </div>
 
                 <div
-                  style={{
-                    fontSize: "11px",
-                    color: "var(--text-body)",
-                    lineHeight: 1.55,
-                    marginTop: "4px",
-                    marginBottom: "8px",
-                  }}
+                  className="row-desc"
+                  style={{ marginTop: "4px", marginBottom: "8px" }}
                 >
                   {project.desc}
                 </div>
 
                 <div className="flex flex-wrap" style={{ gap: "5px" }}>
-                  {project.tags.map((tag) => (
-                    <span key={tag} style={tagStyle}>
-                      {tag}
-                    </span>
+                  {visibleTags.map((tag) => (
+                    <TechTag key={tag}>{tag}</TechTag>
                   ))}
+                  {hiddenCount > 0 && (
+                    <TechTag>+{hiddenCount}</TechTag>
+                  )}
                 </div>
               </div>
 
               {hasDetail && (
                 <div
                   style={{
-                    fontSize: "13px",
+                    fontSize: "var(--text-sm)",
                     color: "var(--text-ghost)",
                   }}
                 >
@@ -202,7 +145,7 @@ export default function Projects() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.18 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.18 }}
             className="flex items-center justify-center"
             style={{
               position: "fixed",
@@ -214,10 +157,10 @@ export default function Projects() {
           >
             <motion.div
               onClick={(e: React.MouseEvent) => e.stopPropagation()}
-              initial={{ opacity: 0, scale: 0.96 }}
+              initial={{ opacity: 0, scale: prefersReducedMotion ? 1 : 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.96 }}
-              transition={{ duration: 0.18 }}
+              exit={{ opacity: 0, scale: prefersReducedMotion ? 1 : 0.96 }}
+              transition={{ duration: prefersReducedMotion ? 0 : 0.18 }}
               style={{
                 position: "relative",
                 maxWidth: "560px",
@@ -264,26 +207,14 @@ export default function Projects() {
                   {openProject.name}
                 </span>
                 {openProject.status && (
-                  <span
-                    style={{
-                      fontSize: "10px",
-                      borderRadius: "20px",
-                      padding: "1px 8px",
-                      ...badgeStyle(openProject.status),
-                    }}
-                  >
+                  <StatusBadge tone={statusTone(openProject.status)}>
                     {openProject.status}
-                  </span>
+                  </StatusBadge>
                 )}
                 {openProject.date && (
                   <span
-                    style={{
-                      marginLeft: "auto",
-                      fontSize: "11px",
-                      fontFamily: "monospace",
-                      color: "var(--text-ghost)",
-                      whiteSpace: "nowrap",
-                    }}
+                    className="row-date"
+                    style={{ marginLeft: "auto" }}
                   >
                     {openProject.date}
                   </span>
@@ -295,9 +226,7 @@ export default function Projects() {
                 style={{ gap: "5px", marginTop: "10px" }}
               >
                 {openProject.tags.map((tag) => (
-                  <span key={tag} style={tagStyle}>
-                    {tag}
-                  </span>
+                  <TechTag key={tag}>{tag}</TechTag>
                 ))}
               </div>
 
@@ -311,8 +240,9 @@ export default function Projects() {
 
               {openProject.detail && (
                 <div
+                  className="prose"
                   style={{
-                    fontSize: "13px",
+                    fontSize: "var(--text-sm)",
                     color: "var(--text-body)",
                     lineHeight: 1.8,
                   }}
@@ -358,7 +288,7 @@ export default function Projects() {
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{
-                          fontSize: "11px",
+                          fontSize: "var(--text-xs)",
                           color: "var(--text-accent)",
                         }}
                       >

@@ -23,6 +23,17 @@ export interface Project {
 export const projects: Project[] = [
   {
     num: "01",
+    name: "Moonseye",
+    desc: "Multi-source retrieval system with live ingestion, cited answers, and an evolving knowledge base.",
+    detail:
+      "Moonseye is a retrieval system for Deepwoken built on an always-fresh, multi-source knowledge base. Go and Kafka handle live ingestion, while Python services process and index content in PostgreSQL + pgvector. The retrieval layer is continuing to evolve toward hybrid vector + graph search with Neo4j and additional sources beyond the wiki.",
+    tags: ["PostgreSQL", "pgvector", "Kafka", "Go", "Python"],
+    status: "shipped",
+    date: "May 2026 – Present",
+    demo: "https://moonseye.vercel.app/",
+  },
+  {
+    num: "02",
     name: "Unsprawl",
     desc: "AI duplicate task detection across Slack, Jira, and Trello.",
     detail:
@@ -34,7 +45,7 @@ export const projects: Project[] = [
     previews: [unsprawl1, unsprawl2],
   },
   {
-    num: "02",
+    num: "03",
     name: "Remetra",
     desc: "Remetra is a mobile health app for autoimmune patients — log food and symptoms, surface statistically significant correlations",
     tags: ["Gemini", "pgvector", "Django", "sentence-transformers"],
@@ -42,7 +53,7 @@ export const projects: Project[] = [
     date: "Jan – Apr 2026",
   },
   {
-    num: "03",
+    num: "04",
     name: "Blackjack RL",
     desc: "DQN agent trained to play Blackjack in a custom Gymnasium environment, with an accompanying paper on Deep Q-Learning.",
     detail:
@@ -53,7 +64,7 @@ export const projects: Project[] = [
     previews: [blackjackrl1, blackjackrl2],
   },
   {
-    num: "04",
+    num: "05",
     name: "GraphDTA reimplementation",
     desc: "Reimplementation of GraphDTA for drug-target binding affinity prediction with graph neural networks.",
     detail:
@@ -64,7 +75,7 @@ export const projects: Project[] = [
     previews: [graphdta1, graphdta2],
   },
   {
-    num: "05",
+    num: "06",
     name: "RAG nutrition recommender",
     desc: "Web app that answers nutrition questions using RAG over health research documents.",
     detail:
