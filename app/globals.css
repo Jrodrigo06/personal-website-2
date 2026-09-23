@@ -1,7 +1,14 @@
 @import "tailwindcss";
 
-/* moss — default theme */
-:root {
+/* ============================================================
+   Theme palettes — selected via [data-theme] on <html>.
+   "moss" is the production default (config/theme.ts THEME).
+   The rest ("sand" + four candidates) are for live comparison
+   via the dev-only ThemeSwitcher (components/dev/ThemeSwitcher.tsx).
+   ============================================================ */
+
+:root,
+:root[data-theme="moss"] {
   --bg: #090d07;
   --bg-surface: #101808;
   --bg-card: #182010;
@@ -29,33 +36,175 @@
   --progress-fill: #7ab858;
 }
 
-/* sand — warm variant */
-:root.theme-sand {
-    --bg: #090805;
-    --bg-surface: #0e1209;
-    --bg-card: #181a10;
-    --bg-hover: #222018;
-    --border-sub: #141608;
-    --border: #20240e;
-    --border-em: #303818;
-    --text-h1: #e8e0c0;
-    --text-h2: #c8c098;
-    --text-accent: #b0a870;
-    --text-body: #887860;
-    --text-dim: #605040;
-    --text-ghost: #403828;
-    --badge-bg: #181a10;
-    --badge-text: #a09858;
-    --badge-border: #20240e;
-    --badge-amber: #b08a2a;
-    --tag-bg: #0c0b07;
-    --tag-border: #1e1c0e;
-    --tag-text: #585238;
-    --status-dot: #a09858;
-    --vinyl-bg: #0e1209;
-    --vinyl-ring: #20240e;
-    --wave: #706a48;
-    --progress-fill: #a09858;
+:root[data-theme="sand"] {
+  --bg: #090805;
+  --bg-surface: #0e1209;
+  --bg-card: #181a10;
+  --bg-hover: #222018;
+  --border-sub: #141608;
+  --border: #20240e;
+  --border-em: #303818;
+  --text-h1: #e8e0c0;
+  --text-h2: #c8c098;
+  --text-accent: #b0a870;
+  --text-body: #887860;
+  --text-dim: #605040;
+  --text-ghost: #403828;
+  --badge-bg: #181a10;
+  --badge-text: #a09858;
+  --badge-border: #20240e;
+  --badge-amber: #b08a2a;
+  --tag-bg: #0c0b07;
+  --tag-border: #1e1c0e;
+  --tag-text: #585238;
+  --status-dot: #a09858;
+  --vinyl-bg: #0e1209;
+  --vinyl-ring: #20240e;
+  --wave: #706a48;
+  --progress-fill: #a09858;
+}
+
+/* Theme A — Neutral Moss (higher-contrast candidate) */
+:root[data-theme="neutral-moss"] {
+  --bg: #0d0f0d;
+  --bg-surface: #131613;
+  --bg-card: #181c18;
+  --bg-hover: #202520;
+  --border-sub: #1c201c;
+  --border: #272c24;
+  --border-em: #333a2e;
+  --text-h1: #f1f0e8;
+  --text-h2: #d8dccb;
+  --text-accent: #9bcb68;
+  --text-body: #b5b8aa;
+  --text-dim: #858a7b;
+  --text-ghost: #6c7163;
+  --badge-bg: #131613;
+  --badge-text: #9bcb68;
+  --badge-border: #333a2e;
+  --badge-amber: #c39a4a;
+  --tag-bg: #101310;
+  --tag-border: #242923;
+  --tag-text: #9ba18f;
+  --status-dot: #9bcb68;
+  --vinyl-bg: #131613;
+  --vinyl-ring: #272c24;
+  --wave: #858a7b;
+  --progress-fill: #9bcb68;
+}
+
+/* Theme B — Warm Olive */
+:root[data-theme="warm-olive"] {
+  --bg: #11110e;
+  --bg-surface: #171711;
+  --bg-card: #1c1c14;
+  --bg-hover: #26261a;
+  --border-sub: #201f16;
+  --border: #302f28;
+  --border-em: #3c3a2f;
+  --text-h1: #f1ecdd;
+  --text-h2: #d9d2ba;
+  --text-accent: #a5c46a;
+  --text-body: #b8b1a0;
+  --text-dim: #8a8471;
+  --text-ghost: #726c5b;
+  --badge-bg: #171711;
+  --badge-text: #a5c46a;
+  --badge-border: #3c3a2f;
+  --badge-amber: #c39a4a;
+  --tag-bg: #14140e;
+  --tag-border: #2a2920;
+  --tag-text: #a49d8b;
+  --status-dot: #a5c46a;
+  --vinyl-bg: #171711;
+  --vinyl-ring: #302f28;
+  --wave: #8a8471;
+  --progress-fill: #a5c46a;
+}
+
+/* Theme C — Charcoal + Sage */
+:root[data-theme="charcoal-sage"] {
+  --bg: #101211;
+  --bg-surface: #171a18;
+  --bg-card: #1c201d;
+  --bg-hover: #252b26;
+  --border-sub: #1d211e;
+  --border: #2b302c;
+  --border-em: #363c37;
+  --text-h1: #f2f3ee;
+  --text-h2: #dadfd4;
+  --text-accent: #8ebf8a;
+  --text-body: #bec4b9;
+  --text-dim: #8f968a;
+  --text-ghost: #767d72;
+  --badge-bg: #171a18;
+  --badge-text: #8ebf8a;
+  --badge-border: #363c37;
+  --badge-amber: #c39a4a;
+  --tag-bg: #131513;
+  --tag-border: #262b27;
+  --tag-text: #adb3a7;
+  --status-dot: #8ebf8a;
+  --vinyl-bg: #171a18;
+  --vinyl-ring: #2b302c;
+  --wave: #8f968a;
+  --progress-fill: #8ebf8a;
+}
+
+/* Theme D — Warm Charcoal + Muted Amber */
+:root[data-theme="warm-charcoal-amber"] {
+  --bg: #11110f;
+  --bg-surface: #191815;
+  --bg-card: #1e1c18;
+  --bg-hover: #282521;
+  --border-sub: #201e1a;
+  --border: #302e29;
+  --border-em: #3b3833;
+  --text-h1: #f2eee6;
+  --text-h2: #dad3c6;
+  --text-accent: #c3a568;
+  --text-body: #bbb4a7;
+  --text-dim: #8c8578;
+  --text-ghost: #736c60;
+  --badge-bg: #191815;
+  --badge-text: #c3a568;
+  --badge-border: #3b3833;
+  --badge-amber: #c39a4a;
+  --tag-bg: #151412;
+  --tag-border: #2a2723;
+  --tag-text: #aba293;
+  --status-dot: #c3a568;
+  --vinyl-bg: #191815;
+  --vinyl-ring: #302e29;
+  --wave: #8c8578;
+  --progress-fill: #c3a568;
+}
+
+/* ============================================================
+   Type scale — theme-independent. Two entries use clamp() so
+   they scale smoothly with viewport instead of jumping only at
+   the single mobile breakpoint.
+   ============================================================ */
+:root {
+  --text-2xs: 11px;
+  --text-xs: 12px;
+  --text-sm: 13px;
+  --text-base: clamp(14px, 1.2vw + 11px, 16px);
+  --text-base-lg: 15px;
+  --text-2xl: clamp(34px, 5vw + 20px, 48px);
+
+  /* spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+
+  /* layout widths */
+  --content-width: 1080px;
+  --prose-width: 640px;
 }
 
 * {
@@ -74,30 +223,170 @@ body {
 }
 
 .page-container {
-    max-width: 1000px;
+    max-width: var(--content-width);
     margin: 0 auto;
     padding: 0 48px;
     width: 100%;
 }
 
-/* mobile layout (≤640px) — desktop rules above are untouched */
+.prose {
+    max-width: var(--prose-width);
+}
+
+/* visible keyboard-focus ring, applied once site-wide */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+summary:focus-visible {
+    outline: 1px solid var(--border-em);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* ============================================================
+   Section primitives shared across Experience / Projects /
+   Writing / Music / PhotosTeaser via components/ui/*.
+   ============================================================ */
+.section-label {
+    font-size: var(--text-2xs);
+    letter-spacing: 0.12em;
+    color: var(--text-ghost);
+    white-space: nowrap;
+}
+.section-divider {
+    height: 0.5px;
+    background: var(--border);
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: var(--space-4);
+    padding: var(--space-3) 0;
+    border-bottom: 0.5px solid var(--border-sub);
+}
+.row:last-child {
+    border-bottom: none;
+}
+.row-title {
+    font-size: var(--text-base-lg);
+    font-weight: 500;
+    color: var(--text-h2);
+}
+.row-meta {
+    font-size: var(--text-sm);
+    color: var(--text-body);
+    margin-top: 2px;
+}
+.row-desc {
+    font-size: var(--text-sm);
+    color: var(--text-body);
+    line-height: 1.55;
+}
+.row-date {
+    font-size: var(--text-2xs);
+    font-family: monospace;
+    color: var(--text-ghost);
+    white-space: nowrap;
+}
+
+.tag {
+    font-size: var(--text-2xs);
+    color: var(--tag-text);
+    background: var(--tag-bg);
+    border: 0.5px solid var(--tag-border);
+    border-radius: 8px;
+    padding: 2px 7px;
+    white-space: nowrap;
+}
+
+.badge {
+    font-size: var(--text-2xs);
+    border-radius: 20px;
+    padding: 1px 8px;
+    white-space: nowrap;
+}
+.badge-accent {
+    color: var(--badge-text);
+    background: var(--badge-bg);
+    border: 0.5px solid var(--badge-border);
+}
+.badge-amber {
+    color: var(--badge-amber);
+    background: var(--badge-bg);
+    border: 0.5px solid var(--badge-border);
+}
+.badge-muted {
+    color: var(--text-dim);
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
+}
+
+/* Generate — nested sub-role rows */
+.org-role {
+    padding: var(--space-3) 0 var(--space-3) var(--space-4);
+    border-left: 0.5px solid var(--border-sub);
+}
+.org-role + .org-role {
+    margin-top: var(--space-1);
+}
+
+/* ============================================================
+   Nav
+   ============================================================ */
+.nav-link {
+    font-size: var(--text-xs);
+    color: var(--text-body);
+    transition: color 0.15s ease;
+}
+.nav-link:hover {
+    color: var(--text-h2);
+}
+
+/* ============================================================
+   Responsive breakpoints
+   ============================================================ */
+@media (max-width: 1024px) {
+    .nav-links {
+        gap: var(--space-4) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-container {
+        padding: 0 32px;
+    }
+    .nav-links {
+        gap: var(--space-3) !important;
+    }
+}
+
 @media (max-width: 640px) {
     .page-container {
         padding: 0 24px;
     }
-    .hero-overline {
-        font-size: 9px !important;
-        letter-spacing: 0.08em !important;
+    .hero-top {
+        grid-template-columns: 1fr !important;
+    }
+    .hero-photo {
+        display: none !important;
     }
     .hero-bottom {
         flex-direction: column !important;
         align-items: flex-start !important;
-        gap: 16px !important;
+        gap: var(--space-4) !important;
     }
     .hero-cta {
         flex-wrap: wrap;
     }
     .mobile-hide-date {
+        display: none !important;
+    }
+}
+
+@media (max-width: 430px) {
+    .nav-link-secondary {
         display: none !important;
     }
 }
@@ -127,24 +416,12 @@ section[id] {
     background: var(--bg-hover);
 }
 
-@keyframes wave {
-    0%,
-    100% {
-        transform: scaleY(0.4);
-    }
-    50% {
-        transform: scaleY(1);
-    }
+.click-row {
+    transition: background 0.15s ease;
 }
-
-@keyframes constellation-pulse {
-    0%,
-    100% {
-        opacity: 0.05;
-    }
-    50% {
-        opacity: 0.2;
-    }
+.click-row:hover,
+.click-row:focus-visible {
+    background: var(--bg-hover);
 }
 
 /* live status indicator — expanding accent ring behind a solid dot */

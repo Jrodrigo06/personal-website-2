@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, DM_Sans } from "next/font/google";
 import { THEME } from "@/config/theme";
+import ThemeSwitcher from "@/components/dev/ThemeSwitcher";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -29,12 +30,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${dmSans.variable}${
-        THEME === "sand" ? " theme-sand" : ""
-      }`}
+      data-theme={THEME}
+      className={`${fraunces.variable} ${dmSans.variable}`}
     >
       <body>
         <div>{children}</div>
+        {process.env.NODE_ENV !== "production" && <ThemeSwitcher />}
       </body>
     </html>
   );

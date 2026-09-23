@@ -14,19 +14,19 @@ export default function Home() {
       <main>
         <div className="page-container">
           <Hero />
-          <section id="experience">
+          <section id="experience" style={{ marginTop: "var(--space-6)" }}>
             <Experience />
           </section>
-          <section id="projects">
+          <section id="projects" style={{ marginTop: "var(--space-6)" }}>
             <Projects />
           </section>
-          <section id="writing">
+          <section id="writing" style={{ marginTop: "var(--space-6)" }}>
             <Writing />
           </section>
-          <section id="music">
+          <section id="music" style={{ marginTop: "var(--space-6)" }}>
             <Music />
           </section>
-          <section id="photos">
+          <section id="photos" style={{ marginTop: "var(--space-6)" }}>
             <PhotosTeaser />
           </section>
         </div>
