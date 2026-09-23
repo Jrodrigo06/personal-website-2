@@ -1,27 +1,13 @@
 import Image from "next/image";
 import { getTopTracks } from "@/lib/spotify";
+import SectionHeader from "@/components/ui/SectionHeader";
 
 export default async function Music() {
   const tracks = await getTopTracks(5);
 
   return (
     <div style={{ padding: "24px 0" }}>
-      {/* section header */}
-      <div className="flex items-center" style={{ gap: "12px" }}>
-        <span
-          style={{
-            fontSize: "10px",
-            letterSpacing: "0.12em",
-            color: "var(--text-ghost)",
-          }}
-        >
-          music
-        </span>
-        <span
-          className="flex-1"
-          style={{ height: "0.5px", background: "var(--border)" }}
-        />
-      </div>
+      <SectionHeader label="music" />
 
       {/* collapsed row that expands to reveal the track list */}
       <details className="music-details" style={{ marginTop: "10px" }}>
@@ -35,11 +21,11 @@ export default async function Music() {
             padding: "10px 14px",
           }}
         >
-          <span style={{ fontSize: "11px", color: "var(--text-body)" }}>
+          <span style={{ fontSize: "var(--text-xs)", color: "var(--text-body)" }}>
             Top 5 · last 4 weeks
           </span>
           <span className="flex items-center" style={{ gap: "8px" }}>
-            <span style={{ fontSize: "10px", color: "var(--text-ghost)" }}>
+            <span style={{ fontSize: "var(--text-2xs)", color: "var(--text-ghost)" }}>
               via Spotify
             </span>
             <svg
@@ -76,7 +62,7 @@ export default async function Music() {
             <div
               style={{
                 padding: "20px 14px",
-                fontSize: "11px",
+                fontSize: "var(--text-xs)",
                 color: "var(--text-body)",
               }}
             >
@@ -102,7 +88,7 @@ export default async function Music() {
                 {/* rank */}
                 <span
                   style={{
-                    fontSize: "10px",
+                    fontSize: "var(--text-2xs)",
                     fontFamily: "monospace",
                     color: "var(--text-ghost)",
                     flexShrink: 0,
@@ -147,7 +133,7 @@ export default async function Music() {
                   <span
                     style={{
                       display: "block",
-                      fontSize: "13px",
+                      fontSize: "var(--text-sm)",
                       fontWeight: 500,
                       color: "var(--text-h2)",
                       whiteSpace: "nowrap",
@@ -160,7 +146,7 @@ export default async function Music() {
                   <span
                     style={{
                       display: "block",
-                      fontSize: "11px",
+                      fontSize: "var(--text-xs)",
                       color: "var(--text-body)",
                       whiteSpace: "nowrap",
                       overflow: "hidden",

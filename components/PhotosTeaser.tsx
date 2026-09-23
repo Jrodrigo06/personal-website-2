@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { photos } from "@/data/photos";
+import SectionHeader from "@/components/ui/SectionHeader";
 
 // Sample up to N evenly-spaced nodes so the preview band reads as a constellation
 // without rendering all frames.
@@ -17,22 +18,7 @@ export default function PhotosTeaser() {
 
   return (
     <div style={{ padding: "24px 0" }}>
-      {/* section header */}
-      <div className="flex items-center" style={{ gap: "12px" }}>
-        <span
-          style={{
-            fontSize: "10px",
-            letterSpacing: "0.12em",
-            color: "var(--text-ghost)",
-          }}
-        >
-          photos
-        </span>
-        <span
-          className="flex-1"
-          style={{ height: "0.5px", background: "var(--border)" }}
-        />
-      </div>
+      <SectionHeader label="photos" />
 
       {/* preview band — links through to the full constellation */}
       <Link href="/photos" style={{ display: "block", textDecoration: "none" }}>
@@ -71,7 +57,7 @@ export default function PhotosTeaser() {
               position: "absolute",
               right: "16px",
               bottom: "14px",
-              fontSize: "11px",
+              fontSize: "var(--text-xs)",
               color: "var(--text-accent)",
             }}
           >
