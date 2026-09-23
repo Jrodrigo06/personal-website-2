@@ -1,24 +1,7 @@
-import { experience, leadership, type Experience } from "@/data/experience";
-
-function SectionHeader({ label }: { label: string }) {
-  return (
-    <div className="flex items-center" style={{ gap: "12px" }}>
-      <span
-        style={{
-          fontSize: "10px",
-          letterSpacing: "0.12em",
-          color: "var(--text-ghost)",
-        }}
-      >
-        {label}
-      </span>
-      <span
-        className="flex-1"
-        style={{ height: "0.5px", background: "var(--border)" }}
-      />
-    </div>
-  );
-}
+import { experience, leadership, generate, type Experience } from "@/data/experience";
+import SectionHeader from "@/components/ui/SectionHeader";
+import StatusBadge from "@/components/ui/StatusBadge";
+import OrgGroupRow from "@/components/OrgGroupRow";
 
 function ItemList({ items }: { items: Experience[] }) {
   return (
@@ -26,77 +9,24 @@ function ItemList({ items }: { items: Experience[] }) {
       {items.map((item, i) => (
         <div
           key={`${item.org}-${i}`}
-          className="grid items-start"
-          style={{
-            gridTemplateColumns: "1fr auto",
-            gap: "16px",
-            padding: "11px 0",
-            borderBottom:
-              i === items.length - 1
-                ? "none"
-                : "0.5px solid var(--border-sub)",
-          }}
+          className="row"
         >
           <div>
             <div className="flex items-center" style={{ gap: "8px" }}>
-              <span
-                style={{
-                  fontSize: "13px",
-                  fontWeight: 500,
-                  color: "var(--text-h2)",
-                }}
-              >
-                {item.role}
-              </span>
-              {item.badge && (
-                <span
-                  style={{
-                    fontSize: "10px",
-                    color: "var(--badge-text)",
-                    background: "var(--badge-bg)",
-                    border: "0.5px solid var(--badge-border)",
-                    borderRadius: "20px",
-                    padding: "1px 8px",
-                  }}
-                >
-                  {item.badge}
-                </span>
-              )}
+              <span className="row-title">{item.role}</span>
+              {item.badge && <StatusBadge>{item.badge}</StatusBadge>}
             </div>
             <div
-              style={{
-                fontSize: "11px",
-                color: "var(--text-body)",
-                marginTop: "2px",
-                marginBottom: item.oneliner ? "3px" : 0,
-              }}
+              className="row-meta"
+              style={{ marginBottom: item.oneliner ? "3px" : 0 }}
             >
               {item.org}
               {item.location ? ` · ${item.location}` : ""}
             </div>
-            {item.oneliner && (
-              <div
-                style={{
-                  fontSize: "11px",
-                  color: "var(--text-body)",
-                  lineHeight: 1.5,
-                }}
-              >
-                {item.oneliner}
-              </div>
-            )}
+            {item.oneliner && <div className="row-desc">{item.oneliner}</div>}
           </div>
 
-          <div
-            className="mobile-hide-date"
-            style={{
-              fontSize: "10px",
-              fontFamily: "monospace",
-              color: "var(--text-ghost)",
-            }}
-          >
-            {item.date}
-          </div>
+          <div className="mobile-hide-date row-date">{item.date}</div>
         </div>
       ))}
     </div>
@@ -115,7 +45,10 @@ export default function Experience() {
 
       <div style={{ marginTop: "24px" }}>
         <SectionHeader label="leadership" />
-        <ItemList items={leadership} />
+        <div style={{ marginTop: "8px" }}>
+          <OrgGroupRow group={generate} />
+          <ItemList items={leadership} />
+        </div>
       </div>
     </div>
   );
