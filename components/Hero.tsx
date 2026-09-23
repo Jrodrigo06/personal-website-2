@@ -38,7 +38,7 @@ export default function Hero() {
               letterSpacing: "0.12em",
             }}
           >
-            Northeastern '28 · Data Science & Mathematics · Boston
+            Northeastern &apos;28 · Data Science & Mathematics · Boston
           </span>
         </div>
 
@@ -80,7 +80,7 @@ export default function Hero() {
             lineHeight: 1.75,
           }}
         >
-          I'm Jerome, a Data Science and Math student at Northeastern
+          I&apos;m Jerome, a Data Science and Math student at Northeastern
           interested in ML engineering, data systems, and software engineering. I
           like working on technically challenging problems and building
           thoughtful systems that have a real impact.

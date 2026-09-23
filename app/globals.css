@@ -30,10 +30,6 @@
   --tag-border: #1e2818;
   --tag-text: #586048;
   --status-dot: #7ab858;
-  --vinyl-bg: #101808;
-  --vinyl-ring: #202c18;
-  --wave: #586048;
-  --progress-fill: #7ab858;
 }
 
 :root[data-theme="sand"] {
@@ -58,10 +54,6 @@
   --tag-border: #1e1c0e;
   --tag-text: #585238;
   --status-dot: #a09858;
-  --vinyl-bg: #0e1209;
-  --vinyl-ring: #20240e;
-  --wave: #706a48;
-  --progress-fill: #a09858;
 }
 
 /* Theme A — Neutral Moss (higher-contrast candidate) */
@@ -87,10 +79,6 @@
   --tag-border: #242923;
   --tag-text: #9ba18f;
   --status-dot: #9bcb68;
-  --vinyl-bg: #131613;
-  --vinyl-ring: #272c24;
-  --wave: #858a7b;
-  --progress-fill: #9bcb68;
 }
 
 /* Theme B — Warm Olive */
@@ -116,10 +104,6 @@
   --tag-border: #2a2920;
   --tag-text: #a49d8b;
   --status-dot: #a5c46a;
-  --vinyl-bg: #171711;
-  --vinyl-ring: #302f28;
-  --wave: #8a8471;
-  --progress-fill: #a5c46a;
 }
 
 /* Theme C — Charcoal + Sage */
@@ -145,10 +129,6 @@
   --tag-border: #262b27;
   --tag-text: #adb3a7;
   --status-dot: #8ebf8a;
-  --vinyl-bg: #171a18;
-  --vinyl-ring: #2b302c;
-  --wave: #8f968a;
-  --progress-fill: #8ebf8a;
 }
 
 /* Theme D — Warm Charcoal + Muted Amber */
@@ -174,10 +154,6 @@
   --tag-border: #2a2723;
   --tag-text: #aba293;
   --status-dot: #c3a568;
-  --vinyl-bg: #191815;
-  --vinyl-ring: #302e29;
-  --wave: #8c8578;
-  --progress-fill: #c3a568;
 }
 
 /* ============================================================
