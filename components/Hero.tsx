@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { LINKS } from "@/config/links";
 
 export default function Hero() {
@@ -8,7 +9,16 @@ export default function Hero() {
         padding: "52px 28px 44px",
       }}
     >
-      {/* top section */}
+      {/* top section — text + a desktop-only personal photo */}
+      <div
+        className="hero-top"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr auto",
+          gap: "32px",
+          alignItems: "start",
+        }}
+      >
       <div className="relative" style={{ zIndex: 1 }}>
         {/* overline */}
         <div className="flex items-center" style={{ gap: "8px" }}>
@@ -23,19 +33,19 @@ export default function Hero() {
           <span
             className="hero-overline"
             style={{
-              fontSize: "10px",
+              fontSize: "var(--text-2xs)",
               color: "var(--text-ghost)",
               letterSpacing: "0.12em",
             }}
           >
-            northeastern &apos;28 · data science &amp; mathematics · boston
+            Northeastern '28 · Data Science & Mathematics · Boston
           </span>
         </div>
 
         {/* name */}
         <h1
           style={{
-            fontSize: "40px",
+            fontSize: "var(--text-2xl)",
             fontWeight: 500,
             fontFamily: "var(--font-serif)",
             color: "var(--text-h1)",
@@ -56,23 +66,46 @@ export default function Hero() {
           style={{ gap: "8px", marginBottom: "18px" }}
         >
           <span className="status-dot" />
-          <span style={{ fontSize: "11px", color: "var(--text-body)" }}>
-            ML intern @ Regeneron · summer 2026
+          <span style={{ fontSize: "var(--text-sm)", color: "var(--text-body)" }}>
+            Data Project Lead @ Generate · Fall 2026
           </span>
         </div>
 
         {/* bio */}
         <p
+          className="prose"
           style={{
-            fontSize: "13px",
+            fontSize: "var(--text-base)",
             color: "var(--text-body)",
-            lineHeight: 1.85,
-            maxWidth: "360px",
+            lineHeight: 1.75,
           }}
         >
-          I'm Jerome, a Data Science and Math student at Northeastern. I love
-          tackling hard problems and I'm always trying to learn something new.
+          I'm Jerome, a Data Science and Math student at Northeastern
+          interested in ML engineering, data systems, and software engineering. I
+          like working on technically challenging problems and building
+          thoughtful systems that have a real impact.
         </p>
+      </div>
+
+        {/* personal photo — desktop only, hidden on mobile via .hero-photo */}
+        <div className="hero-photo relative" style={{ zIndex: 1 }}>
+          <Image
+            src="/hero-portrait.png"
+            alt="Jerome Rodrigo"
+            width={170}
+            height={226}
+            priority
+            style={{
+              width: "170px",
+              height: "226px",
+              objectFit: "cover",
+              borderRadius: "12px",
+              border: "0.5px solid var(--border)",
+              filter: "saturate(0.92)",
+              display: "block",
+            }}
+          />
+        </div>
       </div>
 
       {/* bottom section */}
@@ -84,7 +117,7 @@ export default function Hero() {
           <a
             href="#projects"
             style={{
-              fontSize: "11px",
+              fontSize: "var(--text-xs)",
               padding: "6px 16px",
               borderRadius: "20px",
               background: "var(--bg-card)",
@@ -97,7 +130,7 @@ export default function Hero() {
           <a
             href={LINKS.github}
             style={{
-              fontSize: "11px",
+              fontSize: "var(--text-xs)",
               padding: "6px 16px",
               borderRadius: "20px",
               color: "var(--text-body)",
@@ -109,7 +142,7 @@ export default function Hero() {
           <a
             href={LINKS.linkedin}
             style={{
-              fontSize: "11px",
+              fontSize: "var(--text-xs)",
               padding: "6px 16px",
               borderRadius: "20px",
               color: "var(--text-body)",
@@ -117,6 +150,16 @@ export default function Hero() {
             }}
           >
             linkedin
+          </a>
+          <a
+            href="/photos"
+            style={{
+              fontSize: "var(--text-xs)",
+              padding: "6px 10px",
+              color: "var(--text-dim)",
+            }}
+          >
+            photos ↗
           </a>
         </div>
       </div>

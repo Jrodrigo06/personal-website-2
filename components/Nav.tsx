@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 
 const links = [
-  { label: "experience", href: "#experience" },
-  { label: "projects", href: "#projects" },
-  { label: "writing", href: "#writing" },
-  { label: "music", href: "#music" },
+  { label: "experience", href: "#experience", primary: true },
+  { label: "projects", href: "#projects", primary: true },
+  { label: "writing", href: "#writing", primary: false },
+  { label: "music", href: "#music", primary: false },
 ];
 
 export default function Nav() {
@@ -43,12 +43,12 @@ export default function Nav() {
           jr
         </a>
 
-        <div className="flex items-center" style={{ gap: "18px" }}>
+        <div className="flex items-center nav-links" style={{ gap: "18px" }}>
           {links.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              style={{ fontSize: "11px", color: "var(--text-body)" }}
+              className={`nav-link${link.primary ? "" : " nav-link-secondary"}`}
             >
               {link.label}
             </a>
@@ -56,7 +56,7 @@ export default function Nav() {
           <a
             href="/photos"
             style={{
-              fontSize: "11px",
+              fontSize: "var(--text-xs)",
               color: "var(--text-accent)",
               border: "0.5px solid var(--border)",
               padding: "4px 12px",
