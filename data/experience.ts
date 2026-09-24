@@ -19,7 +19,7 @@ export const experience: Experience[] = [
     role: "Software Engineering Co-op",
     org: "MORSE Corp",
     location: "Boston",
-    oneliner: "Docker · Kubernetes · Airflow · MinIO / S3 · DuckDB · SQL · FastAPI · ML Infrastructure",
+    oneliner: "Docker · Polars · Airflow · MinIO / S3 · DuckDB · SQL · FastAPI · ML Infrastructure",
     date: "Spring 2026",
   },
   {
