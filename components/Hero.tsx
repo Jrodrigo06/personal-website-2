@@ -95,6 +95,7 @@ export default function Hero() {
             width={170}
             height={226}
             priority
+            draggable={false}
             style={{
               width: "170px",
               height: "226px",

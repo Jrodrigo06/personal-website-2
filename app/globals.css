@@ -196,6 +196,10 @@ body {
     color: var(--text-body);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    /* UI chrome (nav, buttons, headings, images) shouldn't select on a
+       stray click-drag; actual readable copy opts back in below. */
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .page-container {
@@ -205,8 +209,11 @@ body {
     width: 100%;
 }
 
-.prose {
-    max-width: var(--prose-width);
+.prose,
+.row-desc,
+p {
+    -webkit-user-select: text;
+    user-select: text;
 }
 
 /* visible keyboard-focus ring, applied once site-wide */

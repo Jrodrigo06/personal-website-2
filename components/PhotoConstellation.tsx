@@ -357,6 +357,10 @@ export default function PhotoConstellation({
   const onPointerUp = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
     dragStart.current = null;
     setIsDragging(false);
+    // Belt-and-suspenders: if it was an actual drag (not a click), clear any
+    // hover that may have latched during the gesture — the pointer is very
+    // unlikely to be resting exactly on a node's center after a pan.
+    if (movedRef.current) setHoveredIndex(null);
     if (e.currentTarget.hasPointerCapture(e.pointerId)) {
       e.currentTarget.releasePointerCapture(e.pointerId);
     }
@@ -437,7 +441,12 @@ export default function PhotoConstellation({
             reducedMotion={reducedMotion}
             entranceDelay={entranceDelays[index]}
             onEnter={() => {
-              if (!isDragging) setHoveredIndex(index);
+              // Check the ref, not the isDragging *state* — pointerenter can
+              // fire on a neighboring node (hit boxes overlap) in the same
+              // tick as pointerdown, before React has committed isDragging,
+              // so reading state here raced and let a node latch on right at
+              // the start of a drag. The ref updates synchronously.
+              if (!dragStart.current) setHoveredIndex(index);
             }}
             onLeave={() =>
               setHoveredIndex((cur) => (cur === index ? null : cur))
