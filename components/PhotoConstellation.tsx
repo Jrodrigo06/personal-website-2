@@ -56,12 +56,76 @@ function clamp(v: number, lo: number, hi: number): number {
   return Math.min(hi, Math.max(lo, v));
 }
 
+// Deterministic pseudo-random in [0, 1), seeded by index — keeps star/entrance
+// layout stable between server and client renders (no hydration mismatch).
+function pseudoRandom(seed: number): number {
+  const x = Math.sin(seed * 12.9898) * 43758.5453;
+  return x - Math.floor(x);
+}
+
+const STAR_COUNT = 90;
+
+// Faint drifting dots filling the empty space between photos — fixed to the
+// viewport (not the pan layer), so they read as a static backdrop the photo
+// field pans over.
+function StarField({ reducedMotion }: { reducedMotion: boolean }) {
+  const stars = useMemo(
+    () =>
+      Array.from({ length: STAR_COUNT }, (_, i) => ({
+        // Rounded to a fixed precision so the server-rendered string and the
+        // client's re-render produce byte-identical style values — otherwise
+        // the browser's CSSOM re-serializes the raw float with fewer
+        // significant digits after parsing the SSR HTML, and React flags a
+        // hydration mismatch on every one of these spans.
+        left: (pseudoRandom(i * 3.1) * 100).toFixed(3),
+        top: (pseudoRandom(i * 7.7 + 1) * 100).toFixed(3),
+        size: (1 + pseudoRandom(i * 5.3 + 2) * 1.5).toFixed(2),
+        duration: (3 + pseudoRandom(i * 2.1 + 3) * 4).toFixed(2),
+        delay: (-pseudoRandom(i * 9.4 + 4) * 6).toFixed(2),
+      })),
+    [],
+  );
+
+  return (
+    <div
+      aria-hidden
+      style={{
+        position: "absolute",
+        inset: 0,
+        zIndex: 0,
+        overflow: "hidden",
+        pointerEvents: "none",
+      }}
+    >
+      {stars.map((star, i) => (
+        <span
+          key={i}
+          className={reducedMotion ? undefined : "star-twinkle"}
+          style={{
+            position: "absolute",
+            left: `${star.left}%`,
+            top: `${star.top}%`,
+            width: `${star.size}px`,
+            height: `${star.size}px`,
+            borderRadius: "50%",
+            background: "var(--text-dim)",
+            opacity: reducedMotion ? 0.25 : undefined,
+            animationDuration: reducedMotion ? undefined : `${star.duration}s`,
+            animationDelay: reducedMotion ? undefined : `${star.delay}s`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 interface NodeProps {
   node: PhotoNode;
   parallaxX: MotionValue<number>;
   parallaxY: MotionValue<number>;
   isHovered: boolean;
   reducedMotion: boolean;
+  entranceDelay: number;
   onEnter: () => void;
   onLeave: () => void;
   onClick: () => void;
@@ -73,6 +137,7 @@ function ConstellationNode({
   parallaxY,
   isHovered,
   reducedMotion,
+  entranceDelay,
   onEnter,
   onLeave,
   onClick,
@@ -121,44 +186,54 @@ function ConstellationNode({
       }}
     >
       <motion.div
-        style={{ x, y }}
-        animate={{ scale: isHovered && !reducedMotion ? HOVER_SCALE : 1 }}
+        initial={reducedMotion ? false : { opacity: 0, scale: 0.4 }}
+        animate={{ opacity: 1, scale: 1 }}
         transition={{
-          type: reducedMotion ? "tween" : "spring",
-          duration: reducedMotion ? 0 : undefined,
-          stiffness: 260,
-          damping: 26,
+          duration: reducedMotion ? 0 : 0.5,
+          delay: reducedMotion ? 0 : entranceDelay,
+          ease: "easeOut",
         }}
       >
-        <div
-          style={{
-            width: `${NODE_SIZE}px`,
-            height: `${NODE_SIZE}px`,
-            borderRadius: "8px",
-            overflow: "hidden",
-            background: "var(--bg-surface)",
-            border: isHovered
-              ? "0.5px solid var(--border-em)"
-              : "0.5px solid var(--border)",
-            boxShadow: glow,
-            transition: "box-shadow 220ms ease, border-color 220ms ease",
+        <motion.div
+          style={{ x, y }}
+          animate={{ scale: isHovered && !reducedMotion ? HOVER_SCALE : 1 }}
+          transition={{
+            type: reducedMotion ? "tween" : "spring",
+            duration: reducedMotion ? 0 : undefined,
+            stiffness: 260,
+            damping: 26,
           }}
         >
-          <Image
-            src={node.thumb}
-            alt={node.filename}
-            width={NODE_SIZE}
-            height={NODE_SIZE}
-            sizes={`${HOVER_SIZE}px`}
+          <div
             style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              display: "block",
+              width: `${NODE_SIZE}px`,
+              height: `${NODE_SIZE}px`,
+              borderRadius: "8px",
+              overflow: "hidden",
+              background: "var(--bg-surface)",
+              border: isHovered
+                ? "0.5px solid var(--border-em)"
+                : "0.5px solid var(--border)",
+              boxShadow: glow,
+              transition: "box-shadow 220ms ease, border-color 220ms ease",
             }}
-            draggable={false}
-          />
-        </div>
+          >
+            <Image
+              src={node.thumb}
+              alt={node.filename}
+              width={NODE_SIZE}
+              height={NODE_SIZE}
+              sizes={`${HOVER_SIZE}px`}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                display: "block",
+              }}
+              draggable={false}
+            />
+          </div>
+        </motion.div>
       </motion.div>
     </div>
   );
@@ -191,6 +266,17 @@ export default function PhotoConstellation({
     }
     return { x: sx / photos.length, y: sy / photos.length };
   }, [photos]);
+
+  // First-load assembly animation: nodes closer to the centroid (the visual
+  // middle of the view) fade/scale in slightly before ones further out.
+  const entranceDelays = useMemo(
+    () =>
+      photos.map((p, i) => {
+        const dist = Math.hypot(p.x - centroid.x, p.y - centroid.y);
+        return clamp(dist * 1.1, 0, 1) + pseudoRandom(i * 4.2 + 10) * 0.15;
+      }),
+    [photos, centroid],
+  );
 
   // Normalized cursor position (-1..1 from container center) drives parallax.
   const parallaxX = useMotionValue(0);
@@ -327,6 +413,8 @@ export default function PhotoConstellation({
         cursor: isDragging ? "grabbing" : "grab",
       }}
     >
+      <StarField reducedMotion={reducedMotion} />
+
       {/* pan layer */}
       <div
         style={{
@@ -347,6 +435,7 @@ export default function PhotoConstellation({
             parallaxY={parallaxY}
             isHovered={hoveredIndex === index}
             reducedMotion={reducedMotion}
+            entranceDelay={entranceDelays[index]}
             onEnter={() => {
               if (!isDragging) setHoveredIndex(index);
             }}

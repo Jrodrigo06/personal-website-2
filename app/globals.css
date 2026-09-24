@@ -450,9 +450,26 @@ section[id] {
     animation: photo-drift 9s ease-in-out infinite;
 }
 
+/* ambient twinkle for the photo constellation's background starfield */
+@keyframes star-twinkle {
+    0%,
+    100% {
+        opacity: 0.15;
+    }
+    50% {
+        opacity: 0.55;
+    }
+}
+.star-twinkle {
+    animation-name: star-twinkle;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .status-dot::after,
-    .photo-dot {
+    .photo-dot,
+    .star-twinkle {
         animation: none;
     }
 }
