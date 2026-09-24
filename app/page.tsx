@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
 import Writing from "@/components/Writing";
+import ArtifactsTeaser from "@/components/ArtifactsTeaser";
 import Music from "@/components/Music";
 import PhotosTeaser from "@/components/PhotosTeaser";
 import { LINKS } from "@/config/links";
@@ -19,6 +20,9 @@ export default function Home() {
           </section>
           <section id="projects" style={{ marginTop: "var(--space-6)" }}>
             <Projects />
+          </section>
+          <section id="artifacts" style={{ marginTop: "var(--space-6)" }}>
+            <ArtifactsTeaser />
           </section>
           <section id="writing" style={{ marginTop: "var(--space-6)" }}>
             <Writing />
