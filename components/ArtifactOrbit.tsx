@@ -35,6 +35,7 @@ export default function ArtifactOrbit({ artifacts }: ArtifactOrbitProps) {
   return (
     <div
       ref={containerRef}
+      className={`orbit-field${size ? " is-ready" : ""}`}
       style={{
         position: "relative",
         width: "100%",

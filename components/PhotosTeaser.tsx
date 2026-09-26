@@ -21,14 +21,14 @@ export default function PhotosTeaser() {
       <SectionHeader label="photos" />
 
       {/* preview band — links through to the full constellation */}
-      <Link href="/photos" style={{ display: "block", textDecoration: "none" }}>
+      <Link href="/photos" className="arrow-link" style={{ display: "block", textDecoration: "none" }}>
         <div
+          className="hover-frame"
           style={{
             position: "relative",
             marginTop: "14px",
             height: `${BAND_HEIGHT}px`,
             background: "var(--bg-surface)",
-            border: "0.5px solid var(--border)",
             borderRadius: "10px",
             overflow: "hidden",
           }}
@@ -61,7 +61,7 @@ export default function PhotosTeaser() {
               color: "var(--text-accent)",
             }}
           >
-            explore photos ↗
+            explore photos <span className="link-arrow link-arrow--ne">↗</span>
           </span>
         </div>
       </Link>

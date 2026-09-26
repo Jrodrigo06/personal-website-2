@@ -4,7 +4,7 @@ import { LINKS } from "@/config/links";
 export default function Hero() {
   return (
     <header
-      className="relative"
+      className="relative reveal-onload"
       style={{
         padding: "52px 28px 44px",
       }}

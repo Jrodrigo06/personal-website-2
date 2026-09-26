@@ -12,11 +12,10 @@ export default async function Music() {
       {/* collapsed row that expands to reveal the track list */}
       <details className="music-details" style={{ marginTop: "10px" }}>
         <summary
-          className="music-summary flex items-center justify-between"
+          className="music-summary hover-frame flex items-center justify-between"
           style={{
             cursor: "pointer",
             background: "var(--bg-surface)",
-            border: "0.5px solid var(--border)",
             borderRadius: "10px",
             padding: "10px 14px",
           }}

@@ -129,7 +129,7 @@ export default function Projects() {
                     color: "var(--text-ghost)",
                   }}
                 >
-                  ↗
+                  <span className="link-arrow link-arrow--ne">↗</span>
                 </div>
               )}
             </div>

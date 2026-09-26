@@ -6,6 +6,7 @@ import Writing from "@/components/Writing";
 import ArtifactsTeaser from "@/components/ArtifactsTeaser";
 import Music from "@/components/Music";
 import PhotosTeaser from "@/components/PhotosTeaser";
+import RevealSection from "@/components/RevealSection";
 import { LINKS } from "@/config/links";
 
 export default function Home() {
@@ -15,24 +16,24 @@ export default function Home() {
       <main>
         <div className="page-container">
           <Hero />
-          <section id="experience" style={{ marginTop: "var(--space-6)" }}>
+          <RevealSection id="experience" style={{ marginTop: "var(--space-6)" }}>
             <Experience />
-          </section>
-          <section id="projects" style={{ marginTop: "var(--space-6)" }}>
+          </RevealSection>
+          <RevealSection id="projects" style={{ marginTop: "var(--space-6)" }}>
             <Projects />
-          </section>
-          <section id="artifacts" style={{ marginTop: "var(--space-6)" }}>
+          </RevealSection>
+          <RevealSection id="artifacts" style={{ marginTop: "var(--space-6)" }}>
             <ArtifactsTeaser />
-          </section>
-          <section id="writing" style={{ marginTop: "var(--space-6)" }}>
+          </RevealSection>
+          <RevealSection id="writing" style={{ marginTop: "var(--space-6)" }}>
             <Writing />
-          </section>
-          <section id="music" style={{ marginTop: "var(--space-6)" }}>
+          </RevealSection>
+          <RevealSection id="music" style={{ marginTop: "var(--space-6)" }}>
             <Music />
-          </section>
-          <section id="photos" style={{ marginTop: "var(--space-6)" }}>
+          </RevealSection>
+          <RevealSection id="photos" style={{ marginTop: "var(--space-6)" }}>
             <PhotosTeaser />
-          </section>
+          </RevealSection>
         </div>
       </main>
       <footer style={{ padding: "16px 0" }}>

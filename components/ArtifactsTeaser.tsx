@@ -30,6 +30,7 @@ export default function ArtifactsTeaser() {
 
       <Link
         href="/artifacts"
+        className="arrow-link"
         style={{
           display: "inline-block",
           marginTop: "12px",
@@ -37,7 +38,7 @@ export default function ArtifactsTeaser() {
           color: "var(--text-accent)",
         }}
       >
-        explore artifacts →
+        explore artifacts <span className="link-arrow link-arrow--e">→</span>
       </Link>
     </div>
   );

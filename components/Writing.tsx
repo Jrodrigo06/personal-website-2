@@ -28,6 +28,7 @@ export default function Writing() {
                 href={item.pdf}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="arrow-link"
                 style={{
                   fontSize: "var(--text-2xs)",
                   color: "var(--text-accent)",
@@ -35,7 +36,7 @@ export default function Writing() {
                   marginTop: "4px",
                 }}
               >
-                read ↗
+                read <span className="link-arrow link-arrow--ne">↗</span>
               </a>
             </div>
           </div>

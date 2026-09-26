@@ -181,6 +181,12 @@
   /* layout widths */
   --content-width: 1080px;
   --prose-width: 640px;
+
+  /* motion — one easing curve for the whole site */
+  --ease-glide: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-hover: 180ms;
+  --dur-reveal: 420ms;
+  --reveal-rise: 8px;
 }
 
 * {
@@ -346,6 +352,9 @@ summary:focus-visible {
 }
 
 @media (max-width: 640px) {
+    :root {
+        --reveal-rise: 6px;
+    }
     .page-container {
         padding: 0 24px;
     }
@@ -393,18 +402,131 @@ section[id] {
 }
 
 .music-row {
-    transition: background 0.15s ease;
+    transition: background var(--dur-hover) var(--ease-glide);
+    -webkit-tap-highlight-color: transparent;
 }
-.music-row:hover {
+.music-row:focus-visible,
+.music-row:active {
     background: var(--bg-hover);
+}
+@media (hover: hover) {
+    .music-row:hover {
+        background: var(--bg-hover);
+    }
+}
+
+/* bordered clickable surfaces (music summary, photos band) — border lifts
+   to the emphasis tone on hover/focus/tap */
+.hover-frame {
+    border: 0.5px solid var(--border);
+    transition: border-color var(--dur-hover) var(--ease-glide);
+    -webkit-tap-highlight-color: transparent;
+}
+.hover-frame:focus-visible,
+.hover-frame:active,
+a:focus-visible > .hover-frame,
+a:active > .hover-frame {
+    border-color: var(--border-em);
+}
+@media (hover: hover) {
+    .hover-frame:hover,
+    a:hover > .hover-frame {
+        border-color: var(--border-em);
+    }
+}
+
+/* trailing arrow glyphs (↗ / →) nudge 1px in their direction when their
+   link or row is hovered/focused */
+.link-arrow {
+    display: inline-block;
+    transition: transform var(--dur-hover) var(--ease-glide);
+}
+.arrow-link {
+    -webkit-tap-highlight-color: transparent;
+    transition: opacity var(--dur-hover) var(--ease-glide);
+}
+.arrow-link:active {
+    opacity: 0.75;
+}
+.arrow-link:focus-visible .link-arrow--ne,
+.click-row:focus-visible .link-arrow--ne {
+    transform: translate(1px, -1px);
+}
+.arrow-link:focus-visible .link-arrow--e {
+    transform: translateX(2px);
+}
+@media (hover: hover) {
+    .arrow-link:hover .link-arrow--ne,
+    .click-row:hover .link-arrow--ne {
+        transform: translate(1px, -1px);
+    }
+    .arrow-link:hover .link-arrow--e {
+        transform: translateX(2px);
+    }
+}
+
+/* section entrance — homepage sections fade + rise once on entering the
+   viewport (components/RevealSection.tsx). The hidden state is gated on
+   html.motion-ok, which app/layout.tsx only sets when motion is allowed. */
+.reveal {
+    transition:
+        opacity var(--dur-reveal) var(--ease-glide),
+        transform var(--dur-reveal) var(--ease-glide);
+}
+html.motion-ok .reveal:not(.is-in) {
+    opacity: 0;
+    transform: translateY(var(--reveal-rise));
+}
+
+/* hero is on screen at load, so it plays the same fade + rise immediately */
+@keyframes reveal-in {
+    from {
+        opacity: 0;
+        transform: translateY(var(--reveal-rise));
+    }
+}
+@media (prefers-reduced-motion: no-preference) {
+    .reveal-onload {
+        animation: reveal-in var(--dur-reveal) var(--ease-glide) both;
+    }
+}
+
+/* artifacts orbit field — the whole field fades in once it has measured
+   itself, just after the page content. Node drift is untouched. */
+@keyframes orbit-field-in {
+    from {
+        opacity: 0;
+    }
+}
+.orbit-field {
+    opacity: 0;
+}
+.orbit-field.is-ready {
+    opacity: 1;
+    animation: orbit-field-in 700ms var(--ease-glide) 150ms both;
 }
 
 .click-row {
-    transition: background 0.15s ease;
+    transition: background var(--dur-hover) var(--ease-glide);
+    -webkit-tap-highlight-color: transparent;
 }
-.click-row:hover,
-.click-row:focus-visible {
+.click-row .row-title {
+    transition: color var(--dur-hover) var(--ease-glide);
+}
+.click-row:focus-visible,
+.click-row:active {
     background: var(--bg-hover);
+}
+.click-row:focus-visible .row-title {
+    color: var(--text-h1);
+}
+@media (hover: hover) {
+    .click-row:hover {
+        background: var(--bg-hover);
+    }
+    .click-row:hover .row-title {
+        color: var(--text-h1);
+    }
 }
 
 /* live status indicator — expanding accent ring behind a solid dot */
@@ -553,7 +675,19 @@ section[id] {
     .status-dot::after,
     .photo-dot,
     .star-twinkle,
-    .orbit-node {
+    .orbit-node,
+    .orbit-field.is-ready {
         animation: none;
+    }
+    .reveal,
+    .link-arrow {
+        transition: none;
+    }
+    html.motion-ok .reveal:not(.is-in) {
+        opacity: 1;
+        transform: none;
+    }
+    .link-arrow {
+        transform: none !important;
     }
 }
