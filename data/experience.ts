@@ -76,7 +76,7 @@ export const leadership: Experience[] = [
     role: "AVP of Technical Development",
     location: "Boston",
     org: "Kappa Theta Pi · Northeastern",
-    date: "Apr 2026–",
+    date: "Apr 2026 — Present",
     badge: "current",
   },
   {
